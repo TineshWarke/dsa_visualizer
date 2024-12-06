@@ -152,10 +152,10 @@ const StringVisualizer: React.FC = () => {
                             backgroundColor: '#34d399',
                             transition: { duration: 0.3 },
                         }}
-                        className="w-12 h-12 flex items-center justify-center bg-accent rounded-full text-white text-xl font-bold shadow-md relative"
+                        className="w-12 h-12 flex items-center justify-center bg-accent rounded-full text-accent-content text-xl font-bold shadow-md relative"
                     >
                         {char}
-                        <span className="absolute -bottom-6 text-xs text-gray-300">{index}</span>
+                        <span className="absolute -bottom-6 text-xs text-white">{index}</span>
                     </motion.div>
                 ))}
             </div>

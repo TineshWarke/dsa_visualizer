@@ -134,7 +134,7 @@ const SetVisualizer: React.FC = () => {
               {...animations.update}
               exit={animations.delete.exit}
               transition={animations.update.transition}
-              className="px-4 py-2 bg-accent text-white font-bold rounded-lg"
+              className="px-4 py-2 bg-accent text-accent-content font-bold rounded-lg"
             >
               {value}
             </motion.div>
@@ -184,7 +184,7 @@ const SetVisualizer: React.FC = () => {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="px-4 py-2 bg-secondary text-white font-bold rounded-lg"
+              className="px-4 py-2 bg-secondary text-black font-bold rounded-lg"
             >
               {value}
             </motion.div>
