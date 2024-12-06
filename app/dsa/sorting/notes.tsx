@@ -1,10 +1,5 @@
 import React from 'react';
 
-interface Note {
-  title: string;
-  description: string;
-}
-
 const sortingDetails = [
   // Bubble Sort
   {
