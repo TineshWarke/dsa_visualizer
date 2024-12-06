@@ -148,7 +148,7 @@ const MapVisualizer: React.FC = () => {
                 {key}
               </div>
 
-              <div className="flex-1 p-4 bg-base-300 text-white rounded-lg shadow-md text-black">
+              <div className="flex-1 p-4 bg-base-300 text-white rounded-lg shadow-md">
                 <p className="text-lg font-medium">{value}</p>
               </div>
             </div>

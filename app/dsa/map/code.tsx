@@ -3,61 +3,111 @@ import React, { useState } from 'react';
 
 // Predefined code examples for different languages
 const languageExamples: { [key: string]: string } = {
-    c: `// C Program to demonstrate array initialization
+    c: `// C Program to demonstrate Map (using a custom implementation)
 #include <stdio.h>
+#include <stdlib.h>
 
-int main()
-{
-    // array initialization using initializer list
-    int arr[5] = { 10, 20, 30, 40, 50 };
+#define MAX_SIZE 100
 
-    // array initialization using initializer list without specifying size
-    int arr1[] = { 1, 2, 3, 4, 5 };
+typedef struct {
+    int key;
+    int value;
+} MapEntry;
 
-    // array initialization using for loop
-    float arr2[5];
-    for (int i = 0; i < 5; i++) {
-        arr2[i] = (float)i * 2.1;
+typedef struct {
+    MapEntry entries[MAX_SIZE];
+    int size;
+} Map;
+
+void insert(Map *map, int key, int value) {
+    if (map->size < MAX_SIZE) {
+        map->entries[map->size].key = key;
+        map->entries[map->size].value = value;
+        map->size++;
     }
+}
+
+int get(Map *map, int key) {
+    for (int i = 0; i < map->size; i++) {
+        if (map->entries[i].key == key) {
+            return map->entries[i].value;
+        }
+    }
+    return -1; // Key not found
+}
+
+int main() {
+    Map map = {{0}, 0};
+    insert(&map, 1, 10);
+    insert(&map, 2, 20);
+
+    printf("Value for key 1: %d\n", get(&map, 1));
+    printf("Value for key 2: %d\n", get(&map, 2));
     return 0;
 }`,
-    javascript: `// JavaScript array initialization
-const arr = [10, 20, 30, 40, 50]; // Using initializer list
-const arr1 = new Array(5).fill(0).map((_, index) => index * 2.1); // Using for loop to initialize`,
-    python: `# Python list initialization
-arr = [10, 20, 30, 40, 50]  # Using initializer list
-arr1 = [i * 2.1 for i in range(5)]  # Using list comprehension to initialize`,
-    cpp: `// C++ Program to demonstrate array initialization
+    javascript: `// JavaScript Map example
+const map = new Map();
+
+// Inserting key-value pairs
+map.set(1, 10);
+map.set(2, 20);
+
+// Retrieving values
+console.log('Value for key 1:', map.get(1));
+console.log('Value for key 2:', map.get(2));
+
+// Checking if a key exists
+console.log('Contains key 1:', map.has(1));`,
+    python: `# Python Dictionary (Map) example
+# Creating a dictionary (Map)
+my_map = {1: 10, 2: 20}
+
+# Retrieving values
+print('Value for key 1:', my_map.get(1))
+print('Value for key 2:', my_map.get(2))
+
+# Checking if a key exists
+print('Contains key 1:', 1 in my_map)`,
+    cpp: `// C++ Map example using STL
 #include <iostream>
+#include <map>
 using namespace std;
 
-int main()
-{
-    // array initialization using initializer list
-    int arr[5] = {10, 20, 30, 40, 50};
+int main() {
+    map<int, int> myMap;
 
-    // array initialization using initializer list without specifying size
-    int arr1[] = {1, 2, 3, 4, 5};
+    // Inserting key-value pairs
+    myMap[1] = 10;
+    myMap[2] = 20;
 
-    // array initialization using for loop
-    float arr2[5];
-    for (int i = 0; i < 5; i++) {
-        arr2[i] = (float)i * 2.1;
+    // Retrieving values
+    cout << "Value for key 1: " << myMap[1] << endl;
+    cout << "Value for key 2: " << myMap[2] << endl;
+
+    // Checking if a key exists
+    if (myMap.find(1) != myMap.end()) {
+        cout << "Contains key 1" << endl;
     }
 
     return 0;
 }`,
-    java: `// Java Program to demonstrate array initialization
+    java: `// Java Map example using HashMap
+import java.util.HashMap;
+
 public class Main {
     public static void main(String[] args) {
-        // array initialization using initializer list
-        int[] arr = {10, 20, 30, 40, 50};
+        HashMap<Integer, Integer> map = new HashMap<>();
 
-        // array initialization using for loop
-        float[] arr2 = new float[5];
-        for (int i = 0; i < 5; i++) {
-            arr2[i] = (float) i * 2.1;
-        }
+        // Inserting key-value pairs
+        map.put(1, 10);
+        map.put(2, 20);
+
+        // Retrieving values
+        System.out.println("Value for key 1: " + map.get(1));
+        System.out.println("Value for key 2: " + map.get(2));
+
+        // Checking if a key exists
+        System.out.println("Contains key 1: " + map.containsKey(1));
     }
 }`
 };

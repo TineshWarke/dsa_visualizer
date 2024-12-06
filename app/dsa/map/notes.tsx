@@ -3,109 +3,59 @@ import React from 'react';
 const Notes: React.FC = () => {
     const notes = [
         {
-            title: '1. What is an Array?',
+            title: '1. What is a Map?',
             description:
-                'An array is a data structure that can hold multiple values under a single variable name. The values in an array are stored in a contiguous memory location and are usually of the same data type. Each element in the array is accessed using an index, starting from 0.',
+                'A Map is a collection of key-value pairs where each key is unique and is used to access its corresponding value. Maps are often used when you need to associate data in a way that allows for fast lookups and insertions.',
         },
         {
-            title: '2. Array Indexing',
+            title: '2. Difference Between Map and Object',
             description:
-                'Arrays are indexed collections, meaning each element has a unique index. The first element is at index 0, the second at index 1, and so on. Negative indexing (starting from the end) is supported in some languages like Python, allowing access from the end of the array.',
+                'In JavaScript, both Maps and Objects store key-value pairs. However, Maps allow keys of any type (including objects, functions, and primitive values), while Objects can only have strings and symbols as keys. Maps also maintain the order of elements, while objects do not guarantee order.',
         },
         {
-            title: '3. Fixed Size vs Dynamic Size',
+            title: '3. Common Map Operations',
             description:
-                'In most languages, arrays have a fixed size when they are created. However, some languages allow arrays to dynamically resize. For example, dynamic arrays (e.g., ArrayList in Java, vector in C++) can grow or shrink in size during runtime.',
+                'Maps provide several important operations like adding, getting, and removing key-value pairs. You can check if a key exists, retrieve its corresponding value, or delete a key-value pair. Maps also allow checking their size and clearing all key-value pairs.',
         },
         {
-            title: '4. Homogeneous Data Type',
+            title: '4. Iterating Through a Map',
             description:
-                'Arrays generally store elements of the same data type. This means all elements are either integers, strings, or any other single type. This makes it easier to perform operations and optimizations on the data.',
+                'You can iterate over a Map using methods like `forEach` to execute a function for each key-value pair, or you can use a `for…of` loop with `.keys()`, `.values()`, or `.entries()` to loop through keys, values, or both.',
         },
         {
-            title: '5. Array Traversal',
+            title: '5. Time Complexity',
             description:
-                'Arrays can be traversed using various techniques like loops (for, while) or iterators. Traversing through an array allows accessing each element and performing operations, such as printing, updating, or manipulating the elements.',
+                'Maps generally provide constant time complexity (O(1)) for common operations like adding, getting, and deleting key-value pairs. This makes them very efficient for large datasets compared to arrays or objects.',
         },
         {
-            title: '6. Multidimensional Arrays',
+            title: '6. Key Characteristics',
             description:
-                'Arrays can be multidimensional, which means they can hold arrays as elements. A 2D array can be thought of as a table or grid, with rows and columns. Multidimensional arrays are used for complex data representation like matrices or images.',
+                'Maps maintain the insertion order of key-value pairs and allow keys of any type. They are also iterable, meaning you can loop through the map easily, which makes them useful for situations where order matters or when dealing with different data types as keys.',
         },
         {
-            title: '7. Array Operations',
+            title: '7. Use Cases for Maps',
             description:
-                'Common operations on arrays include adding or removing elements, searching for specific elements, sorting, filtering, slicing (getting a subarray), and updating array elements. In many languages, built-in functions exist for these operations.',
+                'Maps are ideal when you need to perform efficient lookups based on keys, such as for caching, storing configuration data, or representing relationships between different types of data. Maps are also useful for scenarios where you need to use objects or other non-primitive values as keys.',
         },
         {
-            title: '8. Memory Efficiency',
+            title: '8. Performance Considerations',
             description:
-                'Arrays are often memory-efficient because they store elements in contiguous memory locations. This allows for faster data access, as the memory is organized and predictable. The fixed-size nature of arrays can also help in optimizing memory usage.',
+                'Maps are optimized for frequent insertion, deletion, and lookup operations. In contrast to objects, Maps are better suited for large datasets because they offer faster lookups and maintain the order of elements.',
         },
         {
-            title: '9. Array Initialization',
+            title: '9. WeakMap',
             description:
-                'Arrays can be initialized with specific values or left empty with a predefined size. In most languages, the syntax to declare an array is as follows: `Type[] arrayName = new Type[size]`. Some languages allow array initialization with values like `arrayName = [1, 2, 3]`.',
+                'A WeakMap is similar to a Map but with one key difference: the keys in a WeakMap are weakly referenced. This means that if there are no other references to the key, it can be garbage collected, helping to avoid memory leaks in certain situations.',
         },
         {
-            title: '10. Immutable vs Mutable Arrays',
+            title: '10. Serialization of Maps',
             description:
-                'In some languages, arrays are immutable, meaning their elements cannot be modified after creation (e.g., tuples in Python). In other languages, arrays are mutable, meaning their elements can be modified at any point in time.',
+                'To convert a Map into an array or JSON format for storage or transmission, you can use methods like `Array.from(map)` or `JSON.stringify(Object.fromEntries(map))`. Similarly, to convert back, you can use `new Map()` to recreate the Map.',
         },
         {
-            title: '11. Array vs List',
+            title: '11. Maps vs. Arrays',
             description:
-                'While both arrays and lists are used to store collections of data, arrays usually have a fixed size, and elements must be of the same type. Lists, on the other hand, are often dynamic and can hold elements of mixed types (depending on the language). Lists can grow or shrink in size dynamically.',
-        },
-        {
-            title: '12. Sparse Arrays',
-            description:
-                'A sparse array is an array in which most of the elements are zero or empty. Sparse arrays are often used to store large datasets with many missing values, helping save memory by only storing non-zero elements.',
-        },
-        {
-            title: '13. Array Slicing',
-            description:
-                'Array slicing is the process of extracting a subset of an array. In many languages like Python, this can be done using a range or specific index, e.g., `array[2:5]` extracts elements at index 2, 3, and 4.',
-        },
-        {
-            title: '14. Associative Arrays (Hash Maps)',
-            description:
-                'Associative arrays are arrays that use key-value pairs rather than numerical indices. This allows you to store values associated with a unique key. Some languages (e.g., JavaScript, PHP) support associative arrays natively, while others implement them using hash maps.',
-        },
-        {
-            title: '15. Resizing Arrays',
-            description:
-                'Resizing an array involves creating a new array with a larger or smaller size and copying the existing elements into it. Some data structures like dynamic arrays (e.g., `ArrayList` in Java, `Vector` in C++) support automatic resizing when elements are added or removed.',
-        },
-        {
-            title: '16. Memory Allocation of Arrays',
-            description:
-                'Arrays are typically allocated in contiguous blocks of memory. In languages with manual memory management (like C), the memory for arrays can be allocated using specific functions like `malloc`. In higher-level languages, the memory allocation is managed automatically.',
-        },
-        {
-            title: '17. Array References and Copying',
-            description:
-                'When passing arrays to functions, a reference to the array is passed, not the actual array. This means modifications made within the function affect the original array. To avoid this, arrays can be copied before passing, either by value or through shallow/deep copy mechanisms.',
-        },
-        {
-            title: '18. Array Search Algorithms',
-            description:
-                'Common algorithms for searching in arrays include linear search (for unsorted arrays) and binary search (for sorted arrays). Searching allows finding the index or value of a particular element.',
-        },
-        {
-            title: '19. Sorting Arrays',
-            description:
-                'Sorting is the process of arranging elements in a particular order. Common sorting algorithms include bubble sort, quicksort, mergesort, and heapsort. Arrays can be sorted either in ascending or descending order.',
-        },
-        {
-            title: '20. Array Concatenation',
-            description:
-                'Concatenation is the process of joining two or more arrays to form a single array. Many languages provide built-in methods for array concatenation, like `concat()` in JavaScript or `array1 + array2` in Python.',
-        },
-        {
-            title: '21. Array Spreading/Unpacking',
-            description:
-                'In some languages, you can use the spread operator or unpacking syntax to expand an array into individual elements. For example, in JavaScript, `let newArray = [...array1, ...array2]` combines two arrays.',
+                'While arrays are great for ordered collections of values, Maps are better for cases where you need to associate values with keys. Arrays use numerical indexes, while Maps allow any type of key. Maps also maintain order and allow fast lookups, making them ideal for certain types of data structures.',
         },
     ];
 

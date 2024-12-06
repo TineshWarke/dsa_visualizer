@@ -4,8 +4,13 @@ import { motion } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-const Visualizer: React.FC = () => {
-  const [array, setArray] = useState<number[]>([20, 40, 30, 10, 50]);
+interface Node {
+  value: number;
+  next: Node | null;
+}
+
+const LinkedListVisualizer: React.FC = () => {
+  const [linkedList, setLinkedList] = useState<Node | null>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [indexValue, setIndexValue] = useState<string>("");
   const [mounted, setMounted] = useState(false);
@@ -18,164 +23,211 @@ const Visualizer: React.FC = () => {
     return null;
   }
 
+  // Function to create a linked list from an array
+  const createLinkedList = (values: number[]): Node | null => {
+    if (values.length === 0) return null;
+    let head: Node = { value: values[0], next: null };
+    let current = head;
+    for (let i = 1; i < values.length; i++) {
+      current.next = { value: values[i], next: null };
+      current = current.next;
+    }
+    return head;
+  };
+
   // Array Operations
-  const handlePush = () => {
+  const handlePushFront = () => {
     if (!inputValue) {
-      toast.error('Enter number to push')
-      return
+      toast.error('Enter number to add');
+      return;
     }
-    if (array.length < 20) {
-      const value = Number(inputValue);
-      if (value <= 100) {
-        setArray([...array, value]);
-        setInputValue("");
-        setIndexValue("");
-      } else {
-        toast.error("Value cannot exceed 100!");
-      }
-    } else {
-      toast.error("Array size is limited to 20!");
-    }
-  };
-
-  const handlePop = () => {
-    if (!array.length) {
-      toast.error('Empty Array')
-      return
-    }
-    setArray(array.slice(0, -1));
+    const value = Number(inputValue);
+    const newNode: Node = { value, next: linkedList };
+    setLinkedList(newNode);
     setInputValue("");
     setIndexValue("");
   };
 
-  const handleShift = () => {
-    if (!array.length) {
-      toast.error('Empty Array')
-      return
-    }
-    setArray(array.slice(1));
-    setInputValue("");
-    setIndexValue("");
-  };
-
-  const handleUnshift = () => {
+  const handlePushEnd = () => {
     if (!inputValue) {
-      toast.error('Enter number to unshift')
-      return
+      toast.error('Enter number to add');
+      return;
     }
-    if (array.length < 20) {
-      const value = Number(inputValue);
-      if (value <= 100) {
-        setArray([value, ...array]);
-        setInputValue("");
-        setIndexValue("");
-      } else {
-        toast.error("Value cannot exceed 100!");
-      }
-    } else {
-      toast.error("Array size is limited to 20!");
-    }
-  };
+    const value = Number(inputValue);
+    const newNode: Node = { value, next: null };
 
-  const handleSort = () => {
-    setArray([...array].sort((a, b) => a - b));
+    if (!linkedList) {
+      setLinkedList(newNode);
+    } else {
+      let current = linkedList;
+      while (current.next) {
+        current = current.next;
+      }
+      current.next = newNode;
+    }
     setInputValue("");
     setIndexValue("");
   };
 
-  const handleReverse = () => {
-    setArray([...array].reverse());
+  const handlePopFront = () => {
+    if (!linkedList) {
+      toast.error('Empty Linked List');
+      return;
+    }
+    setLinkedList(linkedList.next);
+    setInputValue("");
+    setIndexValue("");
+  };
+
+  const handlePopEnd = () => {
+    if (!linkedList) {
+      toast.error('Empty Linked List');
+      return;
+    }
+    if (!linkedList.next) {
+      setLinkedList(null);
+    } else {
+      let current = linkedList;
+      while (current.next && current.next.next) {
+        current = current.next;
+      }
+      current.next = null;
+    }
     setInputValue("");
     setIndexValue("");
   };
 
   const handleReset = () => {
-    setArray([20, 40, 30, 10, 50]);
+    setLinkedList(createLinkedList([10, 20, 30, 40, 50]));
     setInputValue("");
     setIndexValue("");
   };
 
+  const handleLength = () => {
+    let current = linkedList;
+    let length = 0;
+    while (current) {
+      length++;
+      current = current.next;
+    }
+    toast.success(`Length of Linked List is ${length}`);
+  };
+
   const handleAtIndex = () => {
     const index = Number(indexValue);
-    if (!isNaN(index) && index >= 0 && index < array.length) {
-      toast.success(`Value at index ${index}: ${array[index]}`);
-      setInputValue("");
-      setIndexValue("");
-    } else {
+    if (!isNaN(index) && index >= 0) {
+      let current = linkedList;
+      let currentIndex = 0;
+      while (current) {
+        if (currentIndex === index) {
+          toast.success(`Value at index ${index}: ${current.value}`);
+          return;
+        }
+        current = current.next;
+        currentIndex++;
+      }
       toast.error("Invalid index!");
     }
   };
 
-  const handleIndexOf = () => {
-    if (inputValue) {
-      const value = Number(inputValue);
-      const index = array.indexOf(value);
-      if (index !== -1) {
+  const handleSearch = () => {
+    const value = Number(inputValue);
+    let current = linkedList;
+    let index = 0;
+    while (current) {
+      if (current.value === value) {
         toast.success(`Value ${value} found at index ${index}`);
-        setInputValue("");
-        setIndexValue("");
-      } else {
-        toast.error("Value not found!");
+        return;
       }
+      current = current.next;
+      index++;
+    }
+    toast.error("Value not found!");
+  };
+
+  const handleInsertAtIndex = () => {
+    const index = Number(indexValue);
+    if (!isNaN(index) && inputValue) {
+      const value = Number(inputValue);
+      const newNode: Node = { value, next: null };
+      if (index === 0) {
+        newNode.next = linkedList;
+        setLinkedList(newNode);
+        return;
+      }
+
+      let current = linkedList;
+      let currentIndex = 0;
+      while (current) {
+        if (currentIndex === index - 1) {
+          newNode.next = current.next;
+          current.next = newNode;
+          setLinkedList(linkedList);
+          return;
+        }
+        current = current.next;
+        currentIndex++;
+      }
+      toast.error("Invalid index!");
     }
   };
 
   const handleRemoveAtIndex = () => {
     const index = Number(indexValue);
-    if (!isNaN(index) && index >= 0 && index < array.length) {
-      const newArray = [...array];
-      newArray.splice(index, 1);
-      setArray(newArray);
-      setInputValue("");
-      setIndexValue("");
-    } else {
+    if (!isNaN(index)) {
+      if (index === 0 && linkedList) {
+        setLinkedList(linkedList.next);
+        return;
+      }
+
+      let current = linkedList;
+      let currentIndex = 0;
+      while (current && current.next) {
+        if (currentIndex === index - 1) {
+          current.next = current.next.next;
+          setLinkedList(linkedList);
+          return;
+        }
+        current = current.next;
+        currentIndex++;
+      }
       toast.error("Invalid index!");
     }
   };
 
-  const handleAddAtIndex = () => {
-    const index = Number(indexValue);
-    if (!isNaN(index) && inputValue && index >= 0 && index <= array.length && array.length < 20) {
-      const value = Number(inputValue);
-      if (value <= 100) {
-        const newArray = [...array];
-        newArray.splice(index, 0, value);
-        setArray(newArray);
-        setInputValue("");
-        setIndexValue("");
-      } else {
-        toast.error("Value cannot exceed 100!");
-      }
-    } else {
-      toast.error("Invalid input, index, or array is already full!");
+  // Helper function to render the linked list
+  const renderLinkedList = () => {
+    const nodes: JSX.Element[] = [];
+    let current = linkedList;
+    let index = 0;
+    while (current) {
+      nodes.push(
+        <motion.div
+          key={index}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center space-x-2 p-2 border border-gray-300 rounded-md"
+        >
+          <span className="font-bold">{current.value}</span>
+          <span className="text-sm text-gray-500">({index})</span>
+          {current.next && <span className="text-sm text-gray-400">→</span>}
+        </motion.div>
+      );
+      current = current.next;
+      index++;
     }
+    return nodes;
   };
-
-  const handleLength = () => {
-    toast.success('Length of Array is ' + array.length);
-  }
 
   return (
     <div className="flex flex-col items-center min-h-screen p-4">
       <ToastContainer position="top-center" />
-      <h1 className="text-3xl font-bold mb-6">Array Visualizer</h1>
+      <h1 className="text-3xl font-bold mb-6">Linked List Visualizer</h1>
 
-      {/* Array Visualization */}
-      <div className="flex items-end space-x-2 h-64 w-full max-w-4xl border-t border-gray-300">
-        {array.map((value, index) => (
-          <motion.div
-            key={index}
-            initial={{ height: 0 }}
-            animate={{ height: `${value * 2}px` }}
-            transition={{ duration: 0.5 }}
-            className="w-8 bg-accent rounded-t-lg text-center text-xs text-black relative"
-          >
-            <span className="absolute -bottom-5 left-0 right-0 text-white text-xs">
-              {index}
-            </span>
-            <span className="font-bold">{value}</span>
-          </motion.div>
-        ))}
+      {/* Linked List Visualization */}
+      <div className="flex flex-col space-y-2 w-full max-w-4xl mb-6">
+        {renderLinkedList()}
       </div>
 
       {/* Controls */}
@@ -198,88 +250,22 @@ const Visualizer: React.FC = () => {
           />
         </div>
 
-        {/* Array Method Buttons */}
+        {/* Linked List Method Buttons */}
         <div className="grid grid-cols-3 gap-4">
-          <button
-            onClick={handleUnshift}
-            className="btn border-white border-2"
-          >
-            Unshift
-          </button>
-          <button
-            onClick={handlePush}
-            className="btn border-white border-2"
-          >
-            Push
-          </button>
-          <button
-            onClick={handleSort}
-            className="btn border-white border-2"
-          >
-            Sort
-          </button>
-          <button
-            onClick={handleShift}
-            className="btn border-white border-2"
-          >
-            Shift
-          </button>
-          <button
-            onClick={handlePop}
-            className="btn border-white border-2"
-          >
-            Pop
-          </button>
-          <button
-            onClick={handleReverse}
-            className="btn border-white border-2"
-          >
-            Reverse
-          </button>
-          <button
-            onClick={handleReset}
-            className="btn border-white border-2"
-          >
-            Reset
-          </button>
-          <button
-            onClick={handleAtIndex}
-            className="btn border-white border-2"
-          >
-            At Index
-          </button>
-          <button
-            onClick={handleIndexOf}
-            className="btn border-white border-2"
-          >
-            Index Of
-          </button>
-          <button
-            onClick={handleAddAtIndex}
-            className="btn border-white border-2"
-          >
-            Add at Index
-          </button>
-          <button
-            onClick={handleRemoveAtIndex}
-            className="btn border-white border-2"
-          >
-            Remove at Index
-          </button>
-          <button
-            onClick={handleLength}
-            className="btn border-white border-2"
-          >
-            Length
-          </button>
+          <button onClick={handlePushFront} className="btn border-white border-2">Add Front</button>
+          <button onClick={handlePushEnd} className="btn border-white border-2">Add End</button>
+          <button onClick={handlePopFront} className="btn border-white border-2">Remove Front</button>
+          <button onClick={handlePopEnd} className="btn border-white border-2">Remove End</button>
+          <button onClick={handleReset} className="btn border-white border-2">Reset</button>
+          <button onClick={handleLength} className="btn border-white border-2">Length</button>
+          <button onClick={handleAtIndex} className="btn border-white border-2">At Index</button>
+          <button onClick={handleSearch} className="btn border-white border-2">Search</button>
+          <button onClick={handleInsertAtIndex} className="btn border-white border-2">Insert at Index</button>
+          <button onClick={handleRemoveAtIndex} className="btn border-white border-2">Remove at Index</button>
         </div>
-      </div>
-
-      <div>
-
       </div>
     </div>
   );
 };
 
-export default Visualizer;
+export default LinkedListVisualizer;
