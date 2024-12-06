@@ -8,7 +8,6 @@ const MapVisualizer: React.FC = () => {
   const [map, setMap] = useState<Map<string, number>>(new Map());
   const [keyInput, setKeyInput] = useState<string>("");
   const [valueInput, setValueInput] = useState<string>("");
-  const [highlightedKeys, setHighlightedKeys] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -20,12 +19,6 @@ const MapVisualizer: React.FC = () => {
   if (!mounted) {
     return null;
   }
-
-  // Helper to highlight keys
-  const highlightKeys = (keys: string[]) => {
-    setHighlightedKeys(keys);
-    setTimeout(() => setHighlightedKeys([]), 1000);
-  };
 
   // Map Operations
   const handleAdd = () => {
@@ -101,13 +94,11 @@ const MapVisualizer: React.FC = () => {
       output += `${key}: ${value}, `;
     });
     toast.info(`ForEach Output: ${output.slice(0, -2)}`);
-    highlightKeys([...map.keys()]);
   };
 
   const handleKeys = () => {
     const keys = [...map.keys()];
     toast.info(`Keys: ${keys.join(", ")}`);
-    highlightKeys(keys);
   };
 
   const handleValues = () => {
@@ -118,7 +109,6 @@ const MapVisualizer: React.FC = () => {
   const handleEntries = () => {
     const entries = [...map.entries()];
     toast.info(`Entries: ${entries.map(([k, v]) => `${k}: ${v}`).join(", ")}`);
-    highlightKeys(entries.map(([k]) => k));
   };
 
   const handleHas = () => {
