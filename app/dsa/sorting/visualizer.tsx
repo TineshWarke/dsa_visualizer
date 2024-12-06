@@ -104,10 +104,11 @@ const Visualizer: React.FC = () => {
         const arr = [...array];
         setSortingInProgress(true)
         for (let i = 1; i < arr.length; i++) {
-            let current = arr[i];
+            const current = arr[i];
             let j = i - 1;
-            setComparingBars({ [i]: true, [j]: true });
+            
             while (j >= 0 && arr[j] > current) {
+                setComparingBars({ [i]: true, [j]: true });
                 arr[j + 1] = arr[j];
                 j--;
                 setArray([...arr]);
@@ -132,7 +133,7 @@ const Visualizer: React.FC = () => {
     };
 
     const merge = async (left: number[], right: number[]): Promise<number[]> => {
-        let result: number[] = [];
+        const result: number[] = [];
         let i = 0;
         let j = 0;
         while (i < left.length && j < right.length) {

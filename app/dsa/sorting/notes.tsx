@@ -85,12 +85,7 @@ const sortingDetails = [
   },
 ];
 
-const NoteCard: React.FC<Note> = ({ title, description }) => (
-  <article className="border-l-4 pl-6 py-4 border-teal-500">
-    <h3 className="text-xl font-semibold text-teal-600">{title}</h3>
-    <p className="text-gray-700 text-lg whitespace-pre-line">{description.trim()}</p>
-  </article>
-);
+
 
 const SortingAlgorithms: React.FC = () => (
   <div>

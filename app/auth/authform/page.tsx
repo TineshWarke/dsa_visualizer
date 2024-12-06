@@ -45,7 +45,7 @@ const AuthForm = () => {
             if (token) {
                 localStorage.setItem("token", token); // For authentication
             }
-
+            toast.success('Sign In Successful')
             // Navigate to the dashboard
             router.push('/dashboard'); // This navigates to the dashboard page
         } catch (error) {
