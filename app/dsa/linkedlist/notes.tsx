@@ -3,112 +3,67 @@ import React from 'react';
 const Notes: React.FC = () => {
     const notes = [
         {
-            title: '1. What is an Array?',
-            description:
-                'An array is a data structure that can hold multiple values under a single variable name. The values in an array are stored in a contiguous memory location and are usually of the same data type. Each element in the array is accessed using an index, starting from 0.',
+          title: '1. What is a Linked List?',
+          description:
+            'A linked list is a linear data structure where elements, called nodes, are connected using pointers. Each node contains data and a reference (or link) to the next node in the sequence.',
         },
         {
-            title: '2. Array Indexing',
-            description:
-                'Arrays are indexed collections, meaning each element has a unique index. The first element is at index 0, the second at index 1, and so on. Negative indexing (starting from the end) is supported in some languages like Python, allowing access from the end of the array.',
+          title: '2. Types of Linked Lists',
+          description:
+            'There are three main types of linked lists: \n- Singly Linked List: Each node points to the next node, and the last node points to null.\n- Doubly Linked List: Each node has pointers to both the next and the previous node.\n- Circular Linked List: The last node points back to the first node, forming a circle.',
         },
         {
-            title: '3. Fixed Size vs Dynamic Size',
-            description:
-                'In most languages, arrays have a fixed size when they are created. However, some languages allow arrays to dynamically resize. For example, dynamic arrays (e.g., ArrayList in Java, vector in C++) can grow or shrink in size during runtime.',
+          title: '3. Characteristics of a Linked List',
+          description:
+            'Linked lists are dynamic in size, meaning they can grow or shrink during runtime. They use pointers to manage connections between elements, which allows insertion and deletion without shifting elements as in arrays.',
         },
         {
-            title: '4. Homogeneous Data Type',
-            description:
-                'Arrays generally store elements of the same data type. This means all elements are either integers, strings, or any other single type. This makes it easier to perform operations and optimizations on the data.',
+          title: '4. Advantages of Linked Lists',
+          description:
+            'Linked lists allow efficient insertion and deletion operations compared to arrays. They provide flexibility in memory usage since they do not require contiguous memory allocation.',
         },
         {
-            title: '5. Array Traversal',
-            description:
-                'Arrays can be traversed using various techniques like loops (for, while) or iterators. Traversing through an array allows accessing each element and performing operations, such as printing, updating, or manipulating the elements.',
+          title: '5. Disadvantages of Linked Lists',
+          description:
+            'Linked lists have higher memory overhead due to storage of pointers. Random access is not possible; elements must be accessed sequentially, making lookup operations slower compared to arrays.',
         },
         {
-            title: '6. Multidimensional Arrays',
-            description:
-                'Arrays can be multidimensional, which means they can hold arrays as elements. A 2D array can be thought of as a table or grid, with rows and columns. Multidimensional arrays are used for complex data representation like matrices or images.',
+          title: '6. Basic Operations on Linked Lists',
+          description:
+            'Common operations include: \n- Insertion: Adding elements at the beginning, middle, or end of the list.\n- Deletion: Removing elements from the beginning, middle, or end of the list.\n- Traversal: Accessing each node to read or modify data.\n- Search: Finding a specific value in the list.',
         },
         {
-            title: '7. Array Operations',
-            description:
-                'Common operations on arrays include adding or removing elements, searching for specific elements, sorting, filtering, slicing (getting a subarray), and updating array elements. In many languages, built-in functions exist for these operations.',
+          title: '7. Applications of Linked Lists',
+          description:
+            'Linked lists are used in scenarios like implementing stacks, queues, and graphs. They are also used in dynamic memory management, file systems, and adjacency lists for graphs.',
         },
         {
-            title: '8. Memory Efficiency',
-            description:
-                'Arrays are often memory-efficient because they store elements in contiguous memory locations. This allows for faster data access, as the memory is organized and predictable. The fixed-size nature of arrays can also help in optimizing memory usage.',
+          title: '8. Linked List vs Array',
+          description:
+            'Unlike arrays, linked lists do not require predefined size and do not need contiguous memory allocation. However, linked lists have slower access times due to the lack of direct indexing.',
         },
         {
-            title: '9. Array Initialization',
-            description:
-                'Arrays can be initialized with specific values or left empty with a predefined size. In most languages, the syntax to declare an array is as follows: `Type[] arrayName = new Type[size]`. Some languages allow array initialization with values like `arrayName = [1, 2, 3]`.',
+          title: '9. Circular Linked List Use Cases',
+          description:
+            'Circular linked lists are often used in scenarios where a continuous loop of data is needed, such as in scheduling algorithms, multiplayer games, or buffers.',
         },
         {
-            title: '10. Immutable vs Mutable Arrays',
-            description:
-                'In some languages, arrays are immutable, meaning their elements cannot be modified after creation (e.g., tuples in Python). In other languages, arrays are mutable, meaning their elements can be modified at any point in time.',
+          title: '10. Doubly Linked List Advantages',
+          description:
+            'Doubly linked lists provide efficient traversal in both directions and allow easier deletion of nodes compared to singly linked lists. They are particularly useful in applications like navigation systems or undo-redo functionality.',
         },
         {
-            title: '11. Array vs List',
-            description:
-                'While both arrays and lists are used to store collections of data, arrays usually have a fixed size, and elements must be of the same type. Lists, on the other hand, are often dynamic and can hold elements of mixed types (depending on the language). Lists can grow or shrink in size dynamically.',
+          title: '11. Performance Considerations',
+          description:
+            'Insertion and deletion operations in linked lists are generally O(1) if the pointer is known. However, searching for an element takes O(n) time in the worst case.',
         },
         {
-            title: '12. Sparse Arrays',
-            description:
-                'A sparse array is an array in which most of the elements are zero or empty. Sparse arrays are often used to store large datasets with many missing values, helping save memory by only storing non-zero elements.',
+          title: '12. Real-World Use Cases',
+          description:
+            'Linked lists are used in various real-world applications like implementing hash tables, managing memory through free lists, and in applications where dynamic and frequent insertion or deletion is required.',
         },
-        {
-            title: '13. Array Slicing',
-            description:
-                'Array slicing is the process of extracting a subset of an array. In many languages like Python, this can be done using a range or specific index, e.g., `array[2:5]` extracts elements at index 2, 3, and 4.',
-        },
-        {
-            title: '14. Associative Arrays (Hash Maps)',
-            description:
-                'Associative arrays are arrays that use key-value pairs rather than numerical indices. This allows you to store values associated with a unique key. Some languages (e.g., JavaScript, PHP) support associative arrays natively, while others implement them using hash maps.',
-        },
-        {
-            title: '15. Resizing Arrays',
-            description:
-                'Resizing an array involves creating a new array with a larger or smaller size and copying the existing elements into it. Some data structures like dynamic arrays (e.g., `ArrayList` in Java, `Vector` in C++) support automatic resizing when elements are added or removed.',
-        },
-        {
-            title: '16. Memory Allocation of Arrays',
-            description:
-                'Arrays are typically allocated in contiguous blocks of memory. In languages with manual memory management (like C), the memory for arrays can be allocated using specific functions like `malloc`. In higher-level languages, the memory allocation is managed automatically.',
-        },
-        {
-            title: '17. Array References and Copying',
-            description:
-                'When passing arrays to functions, a reference to the array is passed, not the actual array. This means modifications made within the function affect the original array. To avoid this, arrays can be copied before passing, either by value or through shallow/deep copy mechanisms.',
-        },
-        {
-            title: '18. Array Search Algorithms',
-            description:
-                'Common algorithms for searching in arrays include linear search (for unsorted arrays) and binary search (for sorted arrays). Searching allows finding the index or value of a particular element.',
-        },
-        {
-            title: '19. Sorting Arrays',
-            description:
-                'Sorting is the process of arranging elements in a particular order. Common sorting algorithms include bubble sort, quicksort, mergesort, and heapsort. Arrays can be sorted either in ascending or descending order.',
-        },
-        {
-            title: '20. Array Concatenation',
-            description:
-                'Concatenation is the process of joining two or more arrays to form a single array. Many languages provide built-in methods for array concatenation, like `concat()` in JavaScript or `array1 + array2` in Python.',
-        },
-        {
-            title: '21. Array Spreading/Unpacking',
-            description:
-                'In some languages, you can use the spread operator or unpacking syntax to expand an array into individual elements. For example, in JavaScript, `let newArray = [...array1, ...array2]` combines two arrays.',
-        },
-    ];
-
+      ];
+      
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r my-12">
             <div className="bg-white p-8 rounded-3xl shadow-2xl max-w-7xl w-full">

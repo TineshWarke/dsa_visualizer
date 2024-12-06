@@ -1,233 +1,172 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-interface Node {
-  value: number;
-  next: Node | null;
-}
-
-const LinkedListVisualizer: React.FC = () => {
-  const [linkedList, setLinkedList] = useState<Node | null>(null);
+const Visualizer: React.FC = () => {
+  const [arrayList, setArrayList] = useState<number[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [indexValue, setIndexValue] = useState<string>("");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    // Preload the array with 12 values (max size)
+    setArrayList([5, 10, 20]);
   }, []);
 
   if (!mounted) {
     return null;
   }
 
-  // Function to create a linked list from an array
-  const createLinkedList = (values: number[]): Node | null => {
-    if (values.length === 0) return null;
-    let head: Node = { value: values[0], next: null };
-    let current = head;
-    for (let i = 1; i < values.length; i++) {
-      current.next = { value: values[i], next: null };
-      current = current.next;
-    }
-    return head;
-  };
+  // Array-based methods
 
-  // Array Operations
-  const handlePushFront = () => {
+  const handlePush = () => {
     if (!inputValue) {
-      toast.error('Enter number to add');
+      toast.error('Enter number to push');
       return;
     }
     const value = Number(inputValue);
-    const newNode: Node = { value, next: linkedList };
-    setLinkedList(newNode);
-    setInputValue("");
-    setIndexValue("");
+    if (value <= 100) {
+      setArrayList([...arrayList, value]);
+      setInputValue("");
+    } else {
+      toast.error("Value cannot exceed 100!");
+    }
   };
 
-  const handlePushEnd = () => {
+  const handlePop = () => {
+    if (arrayList.length === 0) {
+      toast.error('Linked-List is empty');
+      return;
+    }
+    setArrayList(arrayList.slice(0, -1));
+  };
+
+  const handleShift = () => {
+    if (arrayList.length === 0) {
+      toast.error('Linked-List is empty');
+      return;
+    }
+    setArrayList(arrayList.slice(1));
+  };
+
+  const handleUnshift = () => {
     if (!inputValue) {
-      toast.error('Enter number to add');
+      toast.error('Enter number to unshift');
       return;
     }
     const value = Number(inputValue);
-    const newNode: Node = { value, next: null };
-
-    if (!linkedList) {
-      setLinkedList(newNode);
+    if (value <= 100) {
+      setArrayList([value, ...arrayList]);
+      setInputValue("");
     } else {
-      let current = linkedList;
-      while (current.next) {
-        current = current.next;
-      }
-      current.next = newNode;
+      toast.error("Value cannot exceed 100!");
     }
+  };
+
+  const handleInsertAt = () => {
+    const index = Number(indexValue);
+    if (!inputValue) {
+      toast.error('Enter value to insert');
+      return;
+    }
+    if (index < 0 || index > arrayList.length) {
+      toast.error("Index out of bounds!");
+      return;
+    }
+    const value = Number(inputValue);
+    const newArray = [...arrayList];
+    newArray.splice(index, 0, value);
+    setArrayList(newArray);
     setInputValue("");
     setIndexValue("");
   };
 
-  const handlePopFront = () => {
-    if (!linkedList) {
-      toast.error('Empty Linked List');
+  const handleDeleteAt = () => {
+    const index = Number(indexValue);
+    if (index < 0 || index >= arrayList.length) {
+      toast.error("Index out of bounds!");
       return;
     }
-    setLinkedList(linkedList.next);
+    const newArray = [...arrayList];
+    newArray.splice(index, 1);
+    setArrayList(newArray);
     setInputValue("");
     setIndexValue("");
   };
 
-  const handlePopEnd = () => {
-    if (!linkedList) {
-      toast.error('Empty Linked List');
-      return;
-    }
-    if (!linkedList.next) {
-      setLinkedList(null);
-    } else {
-      let current = linkedList;
-      while (current.next && current.next.next) {
-        current = current.next;
-      }
-      current.next = null;
-    }
-    setInputValue("");
-    setIndexValue("");
+  const handleReverse = () => {
+    setArrayList([...arrayList].reverse());
+  };
+
+  const getSize = () => {
+    toast.success(`Size of the Linked-List: ${arrayList.length}`);
   };
 
   const handleReset = () => {
-    setLinkedList(createLinkedList([10, 20, 30, 40, 50]));
-    setInputValue("");
-    setIndexValue("");
-  };
-
-  const handleLength = () => {
-    let current = linkedList;
-    let length = 0;
-    while (current) {
-      length++;
-      current = current.next;
-    }
-    toast.success(`Length of Linked List is ${length}`);
-  };
-
-  const handleAtIndex = () => {
-    const index = Number(indexValue);
-    if (!isNaN(index) && index >= 0) {
-      let current = linkedList;
-      let currentIndex = 0;
-      while (current) {
-        if (currentIndex === index) {
-          toast.success(`Value at index ${index}: ${current.value}`);
-          return;
-        }
-        current = current.next;
-        currentIndex++;
-      }
-      toast.error("Invalid index!");
-    }
-  };
-
-  const handleSearch = () => {
-    const value = Number(inputValue);
-    let current = linkedList;
-    let index = 0;
-    while (current) {
-      if (current.value === value) {
-        toast.success(`Value ${value} found at index ${index}`);
-        return;
-      }
-      current = current.next;
-      index++;
-    }
-    toast.error("Value not found!");
-  };
-
-  const handleInsertAtIndex = () => {
-    const index = Number(indexValue);
-    if (!isNaN(index) && inputValue) {
-      const value = Number(inputValue);
-      const newNode: Node = { value, next: null };
-      if (index === 0) {
-        newNode.next = linkedList;
-        setLinkedList(newNode);
-        return;
-      }
-
-      let current = linkedList;
-      let currentIndex = 0;
-      while (current) {
-        if (currentIndex === index - 1) {
-          newNode.next = current.next;
-          current.next = newNode;
-          setLinkedList(linkedList);
-          return;
-        }
-        current = current.next;
-        currentIndex++;
-      }
-      toast.error("Invalid index!");
-    }
-  };
-
-  const handleRemoveAtIndex = () => {
-    const index = Number(indexValue);
-    if (!isNaN(index)) {
-      if (index === 0 && linkedList) {
-        setLinkedList(linkedList.next);
-        return;
-      }
-
-      let current = linkedList;
-      let currentIndex = 0;
-      while (current && current.next) {
-        if (currentIndex === index - 1) {
-          current.next = current.next.next;
-          setLinkedList(linkedList);
-          return;
-        }
-        current = current.next;
-        currentIndex++;
-      }
-      toast.error("Invalid index!");
-    }
-  };
-
-  // Helper function to render the linked list
-  const renderLinkedList = () => {
-    const nodes: JSX.Element[] = [];
-    let current = linkedList;
-    let index = 0;
-    while (current) {
-      nodes.push(
-        <motion.div
-          key={index}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center space-x-2 p-2 border border-gray-300 rounded-md"
-        >
-          <span className="font-bold">{current.value}</span>
-          <span className="text-sm text-gray-500">({index})</span>
-          {current.next && <span className="text-sm text-gray-400">→</span>}
-        </motion.div>
-      );
-      current = current.next;
-      index++;
-    }
-    return nodes;
+    setArrayList([5, 10, 20]);
   };
 
   return (
     <div className="flex flex-col items-center min-h-screen p-4">
       <ToastContainer position="top-center" />
-      <h1 className="text-3xl font-bold mb-6">Linked List Visualizer</h1>
+      <h1 className="text-3xl font-bold mb-6">Linked-List Visualizer</h1>
 
-      {/* Linked List Visualization */}
-      <div className="flex flex-col space-y-2 w-full max-w-4xl mb-6">
-        {renderLinkedList()}
+      {/* Linked-List Visualization */}
+      <div className="flex items-center space-x-8 h-56 w-full max-w-6xl overflow-auto px-8 py-6 bg-transparent relative">
+        {/* Background Blur Effect */}
+        <div className="absolute inset-0 pointer-events-none"></div>
+
+        {arrayList.map((value, index) => (
+          <div key={index} className="flex items-center space-x-6 relative">
+            {/* Node */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="w-28 h-28 bg-gradient-to-br from-accent to-pink-600 rounded-full flex flex-col items-center justify-center shadow-lg text-white font-bold relative hover:scale-110 transform transition duration-300"
+            >
+              {/* Value */}
+              <span className="text-3xl">{value}</span>
+              {/* Index */}
+              <span className="absolute -bottom-8 text-xs text-gray-300">
+                Index: {index}
+              </span>
+            </motion.div>
+
+            {/* Dynamic Arrow */}
+            {index !== arrayList.length - 1 && (
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.5,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  repeatDelay: 0.7,
+                }}
+                className="flex items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-10 w-10 text-accent animate-pulse"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </motion.div>
+            )}
+          </div>
+        ))}
       </div>
 
       {/* Controls */}
@@ -250,22 +189,21 @@ const LinkedListVisualizer: React.FC = () => {
           />
         </div>
 
-        {/* Linked List Method Buttons */}
+        {/* Array Method Buttons */}
         <div className="grid grid-cols-3 gap-4">
-          <button onClick={handlePushFront} className="btn border-white border-2">Add Front</button>
-          <button onClick={handlePushEnd} className="btn border-white border-2">Add End</button>
-          <button onClick={handlePopFront} className="btn border-white border-2">Remove Front</button>
-          <button onClick={handlePopEnd} className="btn border-white border-2">Remove End</button>
-          <button onClick={handleReset} className="btn border-white border-2">Reset</button>
-          <button onClick={handleLength} className="btn border-white border-2">Length</button>
-          <button onClick={handleAtIndex} className="btn border-white border-2">At Index</button>
-          <button onClick={handleSearch} className="btn border-white border-2">Search</button>
-          <button onClick={handleInsertAtIndex} className="btn border-white border-2">Insert at Index</button>
-          <button onClick={handleRemoveAtIndex} className="btn border-white border-2">Remove at Index</button>
+          <button onClick={handleUnshift} className="btn border-white border-2">Unshift</button>
+          <button onClick={handlePush} className="btn border-white border-2">Push</button>
+          <button onClick={handleShift} className="btn border-white border-2">Shift</button>
+          <button onClick={handlePop} className="btn border-white border-2">Pop</button>
+          <button onClick={handleInsertAt} className="btn border-white border-2">Insert At</button>
+          <button onClick={handleDeleteAt} className="btn border-white border-2">Delete At</button>
+          <button onClick={handleReverse} className="btn border-white border-2">Reverse</button>
+          <button onClick={getSize} className="btn border-white border-2">Get Size</button>
+          <button onClick={handleReset} className="btn border-white border-2"> Reset </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default LinkedListVisualizer;
+export default Visualizer;
