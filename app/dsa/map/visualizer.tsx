@@ -140,7 +140,7 @@ const MapVisualizer: React.FC = () => {
               opacity: 1,
               scale: 1,
             }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
             className="p-4 rounded-lg text-center bg-accent text-white shadow-xl transform hover:scale-105 transition-all duration-300"
           >
             <div className="flex items-center justify-between space-x-4">
