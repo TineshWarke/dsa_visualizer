@@ -1,21 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+/* Hide scrollbars but allow scrolling */
+* {
+  scrollbar-width: none; /* For Firefox */
+  scrollbar-color: transparent transparent; /* Hide scrollbar color in Firefox */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-} */
+html, body {
+  overflow: auto; /* Allow scrolling */
+}

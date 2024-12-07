@@ -170,7 +170,7 @@ const Visualizer: React.FC = () => {
       <h1 className="text-3xl font-bold mb-6">Stack Visualizer</h1>
 
       <div className="grid grid-cols-2 gap-4">
-        <div className="flex flex-col-reverse items-center h-[600px] w-full">
+        <div className="flex justify-start h-[600px] w-full">
           <div className="border-white border-x-4 border-b-4 rounded-b-3xl flex flex-col-reverse items-center justify-start space-y-4 p-8 h-[600px]">
             <div className="absolute inset-0 pointer-events-none"></div>
 
