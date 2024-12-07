@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import axios from "axios";
@@ -17,6 +17,27 @@ const AuthForm = () => {
         password: "",
         confirmPassword: ""
     });
+
+    const pulsatingCirclesPositions = useMemo(() => {
+        return [...Array(5)].map(() => ({
+            top: `${Math.random() * 90}vh`,
+            left: `${Math.random() * 90}vw`,
+        }));
+    }, []);
+
+    const floatingSquaresPositions = useMemo(() => {
+        return [...Array(12)].map(() => ({
+            top: `${Math.random() * 100}vh`,
+            left: `${Math.random() * 100}vw`,
+        }));
+    }, []);
+
+    const starsPositions = useMemo(() => {
+        return [...Array(200)].map(() => ({
+            top: `${Math.random() * 100}vh`,
+            left: `${Math.random() * 100}vw`,
+        }));
+    }, [])
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData((form) => ({ ...form, [e.target.name]: e.target.value }));
@@ -112,13 +133,13 @@ const AuthForm = () => {
                 ></motion.div>
 
                 {/* Pulsating Circles */}
-                {[...Array(5)].map((_, i) => (
+                {pulsatingCirclesPositions.map((position, i) => (
                     <motion.div
                         key={i}
                         className="absolute w-32 h-32 border-4 border-accent rounded-full opacity-20"
                         style={{
-                            top: `${Math.random() * 90}vh`,
-                            left: `${Math.random() * 90}vw`,
+                            top: position.top,
+                            left: position.left,
                         }}
                         animate={{
                             scale: [1, 1.2, 1],
@@ -134,13 +155,13 @@ const AuthForm = () => {
                 ))}
 
                 {/* Floating Squares */}
-                {[...Array(12)].map((_, i) => (
+                {floatingSquaresPositions.map((position, i) => (
                     <motion.div
                         key={i}
                         className="absolute w-12 h-12 bg-white/20 rounded-md shadow-lg"
                         style={{
-                            top: `${Math.random() * 100}vh`,
-                            left: `${Math.random() * 100}vw`,
+                            top: position.top,
+                            left: position.left,
                         }}
                         animate={{
                             y: ["0%", "10%", "-10%", "0%"],
@@ -176,13 +197,13 @@ const AuthForm = () => {
                 ))}
 
                 {/* Animated Stars Background */}
-                {[...Array(200)].map((_, i) => (
+                {starsPositions.map((position, i) => (
                     <motion.div
                         key={i}
                         className="absolute w-1 h-1 bg-white rounded-full opacity-50"
                         style={{
-                            top: `${Math.random() * 100}vh`,
-                            left: `${Math.random() * 100}vw`,
+                            top: position.top,
+                            left: position.left,
                         }}
                         animate={{
                             scale: [0.8, 1.2, 0.8],

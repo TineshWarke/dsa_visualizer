@@ -15,6 +15,7 @@ const Dashboard = () => {
         { id: 4, title: 'Sets', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/sets' },
         { id: 5, title: 'Map', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/map' },
         { id: 6, title: 'Linked List', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/linkedlist' },
+        { id: 7, title: 'Stack', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/stack' },
     ];
 
     const handleTopicClick = (path: string) => {
