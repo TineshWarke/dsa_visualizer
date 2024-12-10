@@ -1,16 +1,10 @@
-// import React from 'react'
-// import Visualizer from './visualizer'
-// import Terminal from './code'
-// import Notes from './notes'
+import React from 'react'
 
-// const page = () => {
-//   return (
-//     <div>
-//       <Visualizer />
-//       <Notes />
-//       <Terminal />
-//     </div>
-//   )
-// }
+const page = () => {
+  return (
+    <div>
+    </div>
+  )
+}
 
-// export default page
+export default page
