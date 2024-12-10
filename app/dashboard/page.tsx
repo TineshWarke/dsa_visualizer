@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { motion } from "framer-motion";
 import { useRouter } from 'next/navigation';
+import Navbar from './navbar';
 
 const Dashboard = () => {
     const [mounted, setMounted] = useState(false);
@@ -32,7 +33,7 @@ const Dashboard = () => {
         return null; // Render nothing on the server side
     }
     return (
-        <div className='w-screen h-screen'>
+        <div className='w-screen h-screen pt-4'>
             <ToastContainer />
             {/* Animated Stars Background */}
             {[...Array(200)].map((_, i) => (
@@ -55,25 +56,10 @@ const Dashboard = () => {
                     }}
                 />
             ))}
-
-            <motion.h1
-                className="text-4xl font-bold text-center text-white w-screen"
-                animate={{
-                    opacity: 1,
-                    y: [20, 17],
-                }}
-                transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut",
-                }}
-            >
-                Data Structures & Algorithms Visualizer
-            </motion.h1>
+            <Navbar />
 
             {/* DSA Topics Divs */}
-            <div className="flex flex-wrap justify-center gap-8 w-[96vw] mx-auto mt-12 h-[85vh] overflow-y-scroll">
+            <div className="flex flex-wrap justify-center gap-8 w-[96vw] mx-auto mt-12 h-[80vh] overflow-y-scroll">
                 {topics.map((topic) => (
                     <motion.div
                         key={topic.id}
