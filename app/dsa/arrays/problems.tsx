@@ -141,7 +141,7 @@ const problems: Problem[] = [
 
 
 const LeetCodePage = () => (
-    <div className="container mx-auto p-4 mb-8">
+    <div className="container mx-auto p-4 mb-8 w-[1300px]">
         <h1 className="text-2xl font-bold mb-4">LeetCode Problems</h1>
         <motion.ul
             className="space-y-4"
