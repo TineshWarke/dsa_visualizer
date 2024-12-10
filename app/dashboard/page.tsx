@@ -14,9 +14,10 @@ const Dashboard = () => {
         { id: 3, title: 'Sorting Algorithms', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/sorting' },
         { id: 4, title: 'Sets', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/sets' },
         { id: 5, title: 'Map', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/map' },
-        { id: 6, title: 'Linked List', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/linkedlist' },
-        { id: 7, title: 'Stack', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/stack' },
-        { id: 8, title: 'Queue', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/queue' },
+        { id: 6, title: 'Stack', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/stack' },
+        { id: 7, title: 'Queue', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/queue' },
+        { id: 8, title: 'Linked List', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/linkedlist' },
+        // { id: 9, title: 'Tree', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/tree' },
     ];
 
     const handleTopicClick = (path: string) => {
@@ -76,7 +77,7 @@ const Dashboard = () => {
                 {topics.map((topic) => (
                     <motion.div
                         key={topic.id}
-                        className="btn w-80 h-48 p-6 m-2 bg-white rounded-lg shadow-lg transform transition-all hover:scale-105 cursor-pointer"
+                        className="btn w-80 h-48 p-6 mx-2 my-8 bg-white rounded-lg shadow-lg transform transition-all hover:scale-105 cursor-pointer"
                         initial={{ opacity: 0, scale: 0.8, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{

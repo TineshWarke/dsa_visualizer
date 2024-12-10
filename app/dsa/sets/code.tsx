@@ -125,7 +125,7 @@ const Terminal: React.FC = () => {
     };
 
     return (
-        <div className='h-screen px-80 py-14'>
+        <div className='min-h-screen px-80 py-14'>
             <div className="bg-black text-white p-6 rounded-lg font-mono">
                 <div className="mb-4">
                     <label htmlFor="language" className="text-gray-300">Select Language:</label>

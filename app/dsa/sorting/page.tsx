@@ -1,14 +1,16 @@
 import React from 'react'
 import Visualizer from './visualizer'
-import SelectionSort from './notes'
 import Terminal from './code'
+import SortingAlgorithms from './notes'
+import LeetCodePage from './problems'
 
 const Sorting = () => {
     return (
         <div>
             <Visualizer />
-            <SelectionSort />
             <Terminal />
+            <LeetCodePage />
+            <SortingAlgorithms />
         </div>
     )
 }
