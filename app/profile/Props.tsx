@@ -1,9 +1,8 @@
 'use client'
-import Image from "next/image";
 import React, { useState } from "react";
 
 const Props: React.FC = () => {
-    const [email, setEmail] = useState(localStorage.getItem('email'))
+    const email = useState(localStorage.getItem('email'))
     const [edit, setEdit] = useState(true);
     return (
         <div className="w-full h-full border-white border-4 p-5 rounded-badge shadow-lg flex flex-col items-center justify-center">
