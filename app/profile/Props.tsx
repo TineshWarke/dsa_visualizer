@@ -4,10 +4,17 @@ import React, { useState } from "react";
 const Props: React.FC = () => {
     const [email] = useState(localStorage.getItem('email'))
     const [edit, setEdit] = useState(true);
+
+    interface CustomStyle extends React.CSSProperties {
+        "--value"?: string;
+        "--size"?: string;
+        "--thickness"?: string;
+    }
+
     return (
         <div className="w-full h-full border-white border-4 p-5 rounded-badge shadow-lg flex flex-col items-center justify-center">
             <div className="flex w-full pl-10">
-                <div className="radial-progress text-accent" style={{ "--value": "70", "--size": "12rem", "--thickness": "1.5rem" }} role="progressbar">
+                <div className="radial-progress text-accent" style={{ "--value": "70", "--size": "12rem", "--thickness": "1.5rem" } as CustomStyle} role="progressbar">
                     <img src={'./coder.png'} alt="T" width={142} height={142} className="rounded-full" />
                 </div>
                 <div className="grid grid-cols-2 h-48 w-[900px] mx-auto rounded-badge">
