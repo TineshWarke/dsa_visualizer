@@ -51,7 +51,6 @@ const data = {
         {
             label: 'Empty Portion',
             data: topics.map(topic => 100 + (topic.total * 0)), // The empty portion of the topic
-            backgroundColor: 'rgba(0, 0, 0, 0.1)', // Light gray to represent the empty portion
             borderWidth: 0.5,
         },
     ],
@@ -64,20 +63,11 @@ const options = {
         legend: {
             display: false, // Disable the legend
         },
-        tooltip: {
-            callbacks: {
-                label: (context: any) => {
-                    const index = context.dataIndex;
-                    const topic = topics[index];
-                    return `   (${((topic.completed / topic.total) * 100).toFixed(2)}%)`;
-                },
-            },
-        },
     },
     scales: {
         r: {
             ticks: {
-                display: false, // Disable numbers on radial scale
+                display: false,
             },
         },
     },
