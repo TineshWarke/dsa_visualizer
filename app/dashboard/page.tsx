@@ -63,7 +63,7 @@ const Dashboard = () => {
                 {topics.map((topic) => (
                     <motion.div
                         key={topic.id}
-                        className="btn w-80 h-48 p-6 mx-2 my-8 bg-white rounded-lg shadow-lg transform transition-all hover:scale-105 cursor-pointer"
+                        className="btn w-80 h-48 p-6 mx-2 my-8 bg-white rounded-lg shadow-lg transform transition-all hover:bg-gray-400 cursor-pointer"
                         initial={{ opacity: 0, scale: 0.8, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{

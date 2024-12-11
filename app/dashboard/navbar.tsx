@@ -37,8 +37,15 @@ const Navbar = () => {
                     <a className="btn btn-ghost text-2xl">Data Structures & Algorithms Visualizer</a>
                 </div>
                 <div className="navbar-end">
+                    <div className="rating gap-1 mx-4">
+                        <input type="radio" name="rating-3" className="mask mask-heart bg-red-400" />
+                        <input type="radio" name="rating-3" className="mask mask-heart bg-orange-400" />
+                        <input type="radio" name="rating-3" className="mask mask-heart bg-yellow-400" />
+                        <input type="radio" name="rating-3" className="mask mask-heart bg-lime-400" />
+                        <input type="radio" name="rating-3" className="mask mask-heart bg-green-400" defaultChecked />
+                    </div>
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar bg-base-300">
-                        <div className="w-10 rounded-full" onClick={() => router.push('/profile') }>
+                        <div className="w-10 rounded-full" onClick={() => router.push('/profile')}>
                             <img
                                 alt="T"
                                 src="/coder.png" />

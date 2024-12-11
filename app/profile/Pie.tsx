@@ -17,13 +17,13 @@ interface Topic {
 // Data for the Polar Area Chart
 const topics: Topic[] = [
     { name: 'Array', completed: 50, total: 50 },
-    { name: 'Stack', completed: 30, total: 80 },
-    { name: 'Queue', completed: 12, total: 20 },
-    { name: 'Linked List', completed: 15, total: 40 },
-    { name: 'Binary Tree', completed: 25, total: 50 },
-    { name: 'Graph', completed: 18, total: 60 },
-    { name: 'Hash Map', completed: 35, total: 60 },
-    { name: 'Dynamic Programming', completed: 0, total: 60 },
+    { name: 'String', completed: 30, total: 80 },
+    { name: 'Sorting Algorithams', completed: 12, total: 20 },
+    { name: 'Set', completed: 15, total: 40 },
+    { name: 'Map', completed: 25, total: 50 },
+    { name: 'Stack', completed: 18, total: 60 },
+    { name: 'Queue', completed: 35, total: 60 },
+    { name: 'Linked List', completed: 0, total: 60 },
 ];
 
 // Darker shades for background colors
@@ -43,14 +43,14 @@ const data = {
     labels: topics.map(topic => `${topic.name} (${topic.completed}/${topic.total})`),
     datasets: [
         {
-            label: 'Topics Distribution',
-            data: topics.map(topic => (topic.completed / topic.total) * 100), // Calculate the percentage completion for each topic
+            label: 'Complete',
+            data: topics.map(topic => (topic.completed / topic.total) * 100),
             backgroundColor: backgroundColors,
             borderWidth: 2,
         },
         {
-            label: 'Empty Portion',
-            data: topics.map(topic => 100 + (topic.total * 0)), // The empty portion of the topic
+            label: 'Pending',
+            data: topics.map(topic => 100 + (topic.total * 0)),
             borderWidth: 0.5,
         },
     ],
