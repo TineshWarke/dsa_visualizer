@@ -1,9 +1,16 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Props: React.FC = () => {
-    const [email] = useState(localStorage.getItem('email'))
     const [edit, setEdit] = useState(true);
+    const [email, setEmail] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const storedEmail = localStorage.getItem("email");
+            setEmail(storedEmail);
+        }
+    }, []);
 
     interface CustomStyle extends React.CSSProperties {
         "--value"?: string;
