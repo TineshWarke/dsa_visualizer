@@ -10,16 +10,48 @@ const Dashboard = () => {
     const router = useRouter();
 
     const topics = [
-        { id: 1, title: 'Arrays', description: 'Learn the fundamentals of arrays and how to use them in algorithms.', path: '/dsa/arrays' },
-        { id: 2, title: 'Strings', description: 'Learn the fundamentals of strings and how to use them in algorithms.', path: '/dsa/strings' },
-        { id: 3, title: 'Sorting Algorithms', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/sorting' },
-        { id: 4, title: 'Sets', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/sets' },
-        { id: 5, title: 'Map', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/map' },
-        { id: 6, title: 'Stack', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/stack' },
-        { id: 7, title: 'Queue', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/queue' },
-        { id: 8, title: 'Linked List', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/linkedlist' },
-        // { id: 9, title: 'Tree', description: 'Study popular sorting algorithms and their complexities.', path: '/dsa/tree' },
-    ];
+        {
+            id: 1, title: 'Arrays',
+            description: 'Learn the fundamentals of arrays, including their structure, indexing, and common operations like traversal, insertion, and deletion. Discover how arrays form the basis for more complex data structures and algorithms.',
+            path: '/dsa/arrays'
+        },
+        {
+            id: 2, title: 'Strings',
+            description: 'Understand the intricacies of strings, including manipulation techniques such as concatenation, substring extraction, and pattern matching. Explore their role in text processing and algorithmic problem-solving.',
+            path: '/dsa/strings'
+        },
+        {
+            id: 3, title: 'Sorting Algorithms',
+            description: 'Dive into popular sorting algorithms such as Bubble Sort, Merge Sort, and Quick Sort. Learn their time and space complexities, use cases, and how to implement them efficiently.',
+            path: '/dsa/sorting'
+        },
+        {
+            id: 4, title: 'Sets',
+            description: 'Explore the set data structure and its properties, including uniqueness and unordered storage. Learn about operations like union, intersection, and difference, and their applications in solving problems.',
+            path: '/dsa/sets'
+        },
+        {
+            id: 5, title: 'Map',
+            description: 'Gain an understanding of map data structures, including hash maps and tree maps. Learn about key-value pair storage, hashing techniques, and practical applications like frequency counting.',
+            path: '/dsa/map'
+        },
+        {
+            id: 6, title: 'Stack',
+            description: 'Learn about the stack data structure, its LIFO (Last In, First Out) property, and common operations like push and pop. Discover its use in recursion, expression evaluation, and backtracking.',
+            path: '/dsa/stack'
+        },
+        {
+            id: 7, title: 'Queue',
+            description: 'Understand the FIFO (First In, First Out) property of queues and their variants like circular queues and priority queues. Explore their applications in scheduling, buffering, and breadth-first search.',
+            path: '/dsa/queue'
+        },
+        {
+            id: 8, title: 'Linked List',
+            description: 'Dive into linked lists and learn about their structure, types (singly, doubly, and circular), and operations. Explore their advantages over arrays in dynamic memory allocation.',
+            path: '/dsa/linkedlist'
+        }
+    ]
+        ;
 
     const handleTopicClick = (path: string) => {
         router.push(path);
@@ -75,12 +107,12 @@ const Dashboard = () => {
                         onClick={() => handleTopicClick(topic.path)}
                     >
                         <motion.h3
-                            className="text-2xl font-bold text-gray-800 mb-4"
+                            className="text-2xl font-bold text-gray-800"
                         >
                             {topic.title}
                         </motion.h3>
                         <motion.p
-                            className="text-gray-600"
+                            className="text-gray-600 text-justify"
                         >
                             {topic.description}
                         </motion.p>

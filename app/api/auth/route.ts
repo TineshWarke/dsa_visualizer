@@ -10,10 +10,6 @@ const LoadDb = async () => {
 
 LoadDb()
 
-// export async function GET(request: Request) {
-//     return NextResponse.json({ msg: 'get method hit' })
-// }
-
 const SECRET_KEY = process.env.JWT_SECRET || "your_default_secret_key"; // Store this securely in an environment variable
 
 export async function PUT(request: Request) {
@@ -40,7 +36,7 @@ export async function PUT(request: Request) {
         // Generate a JWT
         const token = jwt.sign({ userId: user._id, email: user.email }, SECRET_KEY, { expiresIn: "1h" });
 
-        return NextResponse.json({ msg: "Login successful", token }, { status: 200 });
+        return NextResponse.json({ msg: "Login successful", token, user: user }, { status: 200 });
     } catch (error) {
         console.error("Error signing in user:", error);
 

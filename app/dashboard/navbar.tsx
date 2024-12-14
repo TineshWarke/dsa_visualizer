@@ -1,9 +1,19 @@
 'use client'
 import { useRouter } from 'next/navigation';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Navbar = () => {
     const router = useRouter();
+    const [rating, setRating] = useState<Number | null>(null);
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const storedUser = localStorage.getItem("user");
+            if (storedUser) {
+                const parsedUser = JSON.parse(storedUser);
+                setRating(parsedUser.rating);
+            }
+        }
+    }, []);
 
     return (
         <div className='mx-10'>

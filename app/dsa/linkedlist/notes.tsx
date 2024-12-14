@@ -1,88 +1,141 @@
-import React from 'react';
+'use client'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
+interface Note {
+    title: string;
+    description: string;
+}
 const Notes: React.FC = () => {
-    const notes = [
-        {
-          title: '1. What is a Linked List?',
-          description:
-            'A linked list is a linear data structure where elements, called nodes, are connected using pointers. Each node contains data and a reference (or link) to the next node in the sequence.',
-        },
-        {
-          title: '2. Types of Linked Lists',
-          description:
-            'There are three main types of linked lists: \n- Singly Linked List: Each node points to the next node, and the last node points to null.\n- Doubly Linked List: Each node has pointers to both the next and the previous node.\n- Circular Linked List: The last node points back to the first node, forming a circle.',
-        },
-        {
-          title: '3. Characteristics of a Linked List',
-          description:
-            'Linked lists are dynamic in size, meaning they can grow or shrink during runtime. They use pointers to manage connections between elements, which allows insertion and deletion without shifting elements as in arrays.',
-        },
-        {
-          title: '4. Advantages of Linked Lists',
-          description:
-            'Linked lists allow efficient insertion and deletion operations compared to arrays. They provide flexibility in memory usage since they do not require contiguous memory allocation.',
-        },
-        {
-          title: '5. Disadvantages of Linked Lists',
-          description:
-            'Linked lists have higher memory overhead due to storage of pointers. Random access is not possible; elements must be accessed sequentially, making lookup operations slower compared to arrays.',
-        },
-        {
-          title: '6. Basic Operations on Linked Lists',
-          description:
-            'Common operations include: \n- Insertion: Adding elements at the beginning, middle, or end of the list.\n- Deletion: Removing elements from the beginning, middle, or end of the list.\n- Traversal: Accessing each node to read or modify data.\n- Search: Finding a specific value in the list.',
-        },
-        {
-          title: '7. Applications of Linked Lists',
-          description:
-            'Linked lists are used in scenarios like implementing stacks, queues, and graphs. They are also used in dynamic memory management, file systems, and adjacency lists for graphs.',
-        },
-        {
-          title: '8. Linked List vs Array',
-          description:
-            'Unlike arrays, linked lists do not require predefined size and do not need contiguous memory allocation. However, linked lists have slower access times due to the lack of direct indexing.',
-        },
-        {
-          title: '9. Circular Linked List Use Cases',
-          description:
-            'Circular linked lists are often used in scenarios where a continuous loop of data is needed, such as in scheduling algorithms, multiplayer games, or buffers.',
-        },
-        {
-          title: '10. Doubly Linked List Advantages',
-          description:
-            'Doubly linked lists provide efficient traversal in both directions and allow easier deletion of nodes compared to singly linked lists. They are particularly useful in applications like navigation systems or undo-redo functionality.',
-        },
-        {
-          title: '11. Performance Considerations',
-          description:
-            'Insertion and deletion operations in linked lists are generally O(1) if the pointer is known. However, searching for an element takes O(n) time in the worst case.',
-        },
-        {
-          title: '12. Real-World Use Cases',
-          description:
-            'Linked lists are used in various real-world applications like implementing hash tables, managing memory through free lists, and in applications where dynamic and frequent insertion or deletion is required.',
-        },
-      ];
-      
+    const [notes, setNotes] = useState<Note[]>([]);
+    const [newNote, setNewNote] = useState<Note>({ title: '', description: '' });
+
+    const handleAddNote = async () => {
+        try {
+            if (typeof window !== "undefined") {
+                const storedUser = localStorage.getItem("user");
+                if (storedUser) {
+                    const parsedUser = JSON.parse(storedUser);
+                    const response = await axios.post("/api/notes", { email: parsedUser.email, topic: 'Linked List', note: newNote });
+                    setNewNote({ title: '', description: '' })
+                    getAllNotes();
+                    toast.success(response.data.msg);
+                }
+            } else {
+                toast.error("An error occurred");
+            }
+        } catch (error) {
+            const errorMessage =
+                axios.isAxiosError(error) && error.response?.data?.error
+                    ? error.response.data.error
+                    : "An error occurred";
+            console.log(errorMessage);
+        }
+    };
+
+    const getAllNotes = async () => {
+        try {
+            if (typeof window !== "undefined") {
+                const storedUser = localStorage.getItem("user");
+                if (storedUser) {
+                    const parsedUser = JSON.parse(storedUser);
+                    const response = await axios.put("/api/topic", { email: parsedUser.email });
+                    const { topicData } = response.data
+                    setNotes(topicData[7].notes)
+                }
+            }
+        } catch (error) {
+            const errorMessage =
+                axios.isAxiosError(error) && error.response?.data?.error
+                    ? error.response.data.error
+                    : "An error occurred";
+            toast.error(errorMessage);
+        }
+    }
+
+    const deleteNote = async (title: string) => {
+        try {
+            if (typeof window !== "undefined") {
+                const storedUser = localStorage.getItem("user");
+                if (storedUser) {
+                    const parsedUser = JSON.parse(storedUser);
+                    const response = await axios.put("/api/notes", { email: parsedUser.email, topic: 'Linked List', title: title });
+                    getAllNotes();
+                    toast.success(response.data.msg);
+                }
+            } else {
+                toast.error("An error occurred");
+            }
+        } catch (error) {
+            const errorMessage =
+                axios.isAxiosError(error) && error.response?.data?.error
+                    ? error.response.data.error
+                    : "An error occurred";
+            toast.error(errorMessage);
+        }
+    }
+
+    useEffect(() => {
+        getAllNotes();
+    }, [])
+
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gradient-to-r my-12">
-            <div className="bg-white p-8 rounded-3xl shadow-2xl max-w-7xl w-full">
-                <h2 className="text-3xl font-extrabold text-gray-800 mb-6 text-center hover:text-base-300 transition-colors duration-300">
-                    Everything About Arrays
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <>
+            <ToastContainer position='top-center' />
+            <div className="max-w-screen-xl mx-auto my-20 px-4">
+                <section aria-labelledby="notes-title">
+                    <h2 id="notes-title" className="text-2xl font-bold text-center mb-8">
+                        Notes
+                    </h2>
                     {notes.map((note, index) => (
-                        <div key={index} className="border-l-4 pl-6 py-4 border-teal-500">
-                            <h3 className="text-xl font-semibold text-teal-600">{note.title}</h3>
-                            <p className="text-gray-700 text-lg text-justify">{note.description}</p>
-                        </div>
+                        <article
+                            key={index}
+                            className="rounded-box glass p-4 px-8 my-4 hover:scale-105 transition-transform"
+                            role="region"
+                            aria-labelledby={`note-title-${index}`}
+                        >
+                            <div className='flex items-center justify-between'>
+                                <h4
+                                    id={`note-title-${index}`}
+                                    className="text-lg text-accent font-bold"
+                                >
+                                    {note.title}
+                                </h4>
+                                <button className='text-red-500 hover:text-red-800' onClick={() => deleteNote(note.title)}>Delete</button>
+                            </div>
+                            <p className="text-justify">{note.description}</p>
+                        </article>
                     ))}
+                </section>
+
+                {/* Add Note Section */}
+                <div className="bg-gray-800 p-6 rounded-lg mt-8">
+                    <h3 className="text-xl font-semibold mb-4">Add a New Note</h3>
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            placeholder="Title"
+                            value={newNote.title}
+                            onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
+                            className="w-full p-2 border rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-accent"
+                        />
+                        <textarea
+                            placeholder="Description"
+                            value={newNote.description}
+                            onChange={(e) => setNewNote({ ...newNote, description: e.target.value })}
+                            className="w-full p-2 border rounded-md h-24 focus:outline-none focus:ring-2 focus:ring-accent"
+                        ></textarea>
+                    </div>
+                    <button
+                        onClick={handleAddNote}
+                        className={`px-8 py-2 bg-accent text-accent-content rounded-md hover:bg-green-600 active:scale-90`}
+                    >
+                        Add Note
+                    </button>
                 </div>
-                <p className="mt-6 text-center text-sm text-gray-500">
-                    Arrays are one of the most important data structures, and mastering them is crucial for efficient programming.
-                </p>
             </div>
-        </div>
+        </>
     );
 };
 

@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface Problem {
     title: string;
@@ -12,189 +14,210 @@ interface Problem {
 
 const problems: Problem[] = [
     {
-        title: "Build Array from Permutation",
-        titleSlug: "build-array-from-permutation",
+        title: "Implement Queue using Stacks",
+        titleSlug: "implement-queue-using-stacks",
         level: "Easy",
-        topics: ["Array", "Simulation"]
+        topics: ["Queue", "Stack"]
     },
     {
-        title: "Concatenation of Array",
-        titleSlug: "concatenation-of-array",
+        title: "Number of Recent Calls",
+        titleSlug: "number-of-recent-calls",
         level: "Easy",
-        topics: ["Array"]
+        topics: ["Queue"]
     },
     {
-        title: "Shuffle the Array",
-        titleSlug: "shuffle-the-array",
-        level: "Easy",
-        topics: ["Array"]
-    },
-    {
-        title: "Kids With the Greatest Number of Candies",
-        titleSlug: "kids-with-the-greatest-number-of-candies",
-        level: "Easy",
-        topics: ["Array"]
-    },
-    {
-        title: "Decode XORed Array",
-        titleSlug: "decode-xored-array",
-        level: "Easy",
-        topics: ["Array", "Bit Manipulation"]
-    },
-    {
-        title: "Maximum XOR for Each Query",
-        titleSlug: "maximum-xor-for-each-query",
+        title: "Design Circular Queue",
+        titleSlug: "design-circular-queue",
         level: "Medium",
-        topics: ["Array", "Bit Manipulation", "Prefix Sum"]
+        topics: ["Queue"]
     },
     {
-        title: "Matrix Block Sum",
-        titleSlug: "matrix-block-sum",
+        title: "My Calendar I",
+        titleSlug: "my-calendar-i",
         level: "Medium",
-        topics: ["Matrix", "Prefix Sum"]
+        topics: ["Queue"]
     },
     {
-        title: "How Many Numbers Are Smaller Than the Current Number",
-        titleSlug: "how-many-numbers-are-smaller-than-the-current-number",
+        title: "Moving Average from Data Stream",
+        titleSlug: "moving-average-from-data-stream",
         level: "Easy",
-        topics: ["Array", "Sorting"]
+        topics: ["Queue"]
     },
     {
-        title: "Minimum Number of Moves to Seat Everyone",
-        titleSlug: "minimum-number-of-moves-to-seat-everyone",
-        level: "Easy",
-        topics: ["Array", "Sorting"]
+        title: "Design Hit Counter",
+        titleSlug: "design-hit-counter",
+        level: "Medium",
+        topics: ["Queue"]
     },
     {
-        title: "Number of Good Pairs",
-        titleSlug: "number-of-good-pairs",
+        title: "The Kth Largest Element in a Stream",
+        titleSlug: "the-kth-largest-element-in-a-stream",
         level: "Easy",
-        topics: ["Array", "Hash Map"]
+        topics: ["Queue", "Design", "Heap"]
     },
     {
-        title: "Count the Number of Consistent Strings",
-        titleSlug: "count-the-number-of-consistent-strings",
+        title: "Last Stone Weight",
+        titleSlug: "last-stone-weight",
         level: "Easy",
-        topics: ["String", "Hash Set"]
+        topics: ["Queue", "Simulation"]
     },
     {
-        title: "Flipping an Image",
-        titleSlug: "flipping-an-image",
-        level: "Easy",
-        topics: ["Array", "Matrix"]
+        title: "Maximal Rectangle",
+        titleSlug: "maximal-rectangle",
+        level: "Hard",
+        topics: ["Queue", "Stack", "Dynamic Programming"]
     },
     {
-        title: "Find First Palindromic String in the Array",
-        titleSlug: "find-first-palindromic-string-in-the-array",
-        level: "Easy",
-        topics: ["String"]
+        title: "Sliding Window Maximum",
+        titleSlug: "sliding-window-maximum",
+        level: "Hard",
+        topics: ["Queue", "Sliding Window", "Heap"]
     },
     {
-        title: "Find Target Indices After Sorting Array",
-        titleSlug: "find-target-indices-after-sorting-array",
-        level: "Easy",
-        topics: ["Array", "Sorting"]
+        title: "Kth Smallest Element in a Sorted Matrix",
+        titleSlug: "kth-smallest-element-in-a-sorted-matrix",
+        level: "Medium",
+        topics: ["Queue", "Binary Search"]
     },
     {
-        title: "Count Negative Numbers in a Sorted Matrix",
-        titleSlug: "count-negative-numbers-in-a-sorted-matrix",
-        level: "Easy",
-        topics: ["Matrix", "Binary Search"]
+        title: "Surrounded Regions",
+        titleSlug: "surrounded-regions",
+        level: "Medium",
+        topics: ["Queue", "DFS", "BFS"]
     },
     {
-        title: "Best Time to Buy and Sell Stock",
-        titleSlug: "best-time-to-buy-and-sell-stock",
-        level: "Easy",
-        topics: ["Array", "Dynamic Programming"]
+        title: "Water and Jug Problem",
+        titleSlug: "water-and-jug-problem",
+        level: "Medium",
+        topics: ["Queue", "Math"]
     },
     {
-        title: "Get Maximum in Generated Array",
-        titleSlug: "get-maximum-in-generated-array",
-        level: "Easy",
-        topics: ["Array", "Dynamic Programming"]
+        title: "Open the Lock",
+        titleSlug: "open-the-lock",
+        level: "Medium",
+        topics: ["Queue", "BFS"]
     },
     {
-        title: "Minimum Difference Between Highest and Lowest of K Scores",
-        titleSlug: "minimum-difference-between-highest-and-lowest-of-k-scores",
-        level: "Easy",
-        topics: ["Array", "Sorting"]
+        title: "Minimum Window Substring",
+        titleSlug: "minimum-window-substring",
+        level: "Hard",
+        topics: ["Queue", "Sliding Window", "Hash Map"]
     },
     {
-        title: "Maximum Average Subarray I",
-        titleSlug: "maximum-average-subarray-i",
-        level: "Easy",
-        topics: ["Array", "Sliding Window"]
-    },
-    {
-        title: "Check if It Is a Straight Line",
-        titleSlug: "check-if-it-is-a-straight-line",
-        level: "Easy",
-        topics: ["Geometry", "Math"]
-    },
-    {
-        title: "Richest Customer Wealth",
-        titleSlug: "richest-customer-wealth",
-        level: "Easy",
-        topics: ["Array", "Matrix"]
+        title: "Word Ladder II",
+        titleSlug: "word-ladder-ii",
+        level: "Hard",
+        topics: ["Queue", "BFS", "Backtracking"]
     }
 ];
 
+const LeetCodePage: React.FC = () => {
+    const [completedQueList, setCompletedQueList] = useState<String[]>([]);
 
-const LeetCodePage = () => (
-    <div className="container mx-auto p-4 mb-8 w-[1300px]">
-        <h1 className="text-2xl font-bold mb-4">LeetCode Problems</h1>
-        <motion.ul
-            className="space-y-4"
-            initial={{ opacity: 0, scale: 0.95 }} // Starting slightly scaled down
-            animate={{ opacity: 1, scale: 1 }} // End state with full scale and opacity
-            transition={{ duration: 0.7, type: "spring", stiffness: 100 }} // Spring animation for smoothness
-        >
-            {problems.map(({ title, titleSlug, level, topics }, index) => (
-                <motion.li
-                    key={titleSlug}
-                    className="flex items-center justify-between p-4 border rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-                    initial={{ opacity: 0, y: 50 }} // Start from below the viewport
-                    animate={{ opacity: 1, y: 0 }} // Animate to its normal position
-                    transition={{
-                        duration: 0.6,
-                        delay: index * 0.1,
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 25
-                    }} // Spring-based animation for individual list items
-                >
-                    <div className="flex-1">
-                        <div className="flex justify-start items-center mb-2 gap-8">
-                            <p className="text-lg font-semibold text-white">{title}</p>
-                            <div className={`badge pb-3 p-2 text-black font-medium ${level === 'Easy' ? 'bg-green-500' : level === 'Medium' ? 'bg-yellow-500' : 'bg-red-500'}`}>{level}</div>
-                        </div>
-                        <p className="text-sm text-gray-300">{topics.join(", ")}</p>
-                    </div>
-                    <div className="flex items-center justify-between gap-8">
-                        <Link href={`https://leetcode.com/problems/${titleSlug}`} target="_blank">
-                            <button
-                                className="btn btn-outline btn-accent"
-                                aria-label={`View problem ${title}`}
-                            >
-                                View
-                            </button>
-                        </Link>
-                        <div className="flex items-center space-x-2">
-                            <input
-                                type="checkbox"
-                                id={`checkbox-${titleSlug}`}
-                                className="checkbox checkbox-accent"
-                            />
-                            <label htmlFor={`checkbox-${titleSlug}`} className="text-sm text-gray-300">
-                                Mark as Complete
-                            </label>
-                        </div>
-                    </div>
-                </motion.li>
-            ))}
-        </motion.ul>
+    const handelSubmission = async (title: string) => {
+        try {
+            if (typeof window !== "undefined") {
+                const storedUser = localStorage.getItem("user");
+                if (storedUser) {
+                    const parsedUser = JSON.parse(storedUser);
+                    await axios.put("/api/problems", { email: parsedUser.email, topic: "Queue", title: title });
+                    getSubmission();
+                }
+            }
+        } catch (error) {
+            const errorMessage =
+                axios.isAxiosError(error) && error.response?.data?.error
+                    ? error.response.data.error
+                    : "An error occurred";
+            console.log(errorMessage);
+        }
+    }
 
-    </div>
-);
+    const getSubmission = async () => {
+        try {
+            if (typeof window !== "undefined") {
+                const storedUser = localStorage.getItem("user");
+                if (storedUser) {
+                    const parsedUser = JSON.parse(storedUser);
+                    const response = await axios.put("/api/topic", { email: parsedUser.email });
+                    const { topicData } = response.data;
+                    setCompletedQueList(topicData[6].completedQuestions);
+                }
+            }
+        } catch (error) {
+            const errorMessage =
+                axios.isAxiosError(error) && error.response?.data?.error
+                    ? error.response.data.error
+                    : "An error occurred";
+            console.log(errorMessage);
+        }
+    }
+
+    useEffect(() => {
+        getSubmission();
+    }, [])
+
+    return (
+        <div className="container mx-auto p-4 mb-8 w-[1300px]">
+            <h1 className="text-2xl font-bold mb-4">LeetCode Problems</h1>
+            <motion.ul
+                className="space-y-4"
+                initial={{ opacity: 0, scale: 0.95 }} // Starting slightly scaled down
+                animate={{ opacity: 1, scale: 1 }} // End state with full scale and opacity
+                transition={{ duration: 0.7, type: "spring", stiffness: 100 }} // Spring animation for smoothness
+            >
+                {problems.map(({ title, titleSlug, level, topics }, index) => (
+                    <motion.li
+                        key={titleSlug}
+                        className="flex items-center justify-between p-4 border rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        initial={{ opacity: 0, y: 50 }} // Start from below the viewport
+                        animate={{ opacity: 1, y: 0 }} // Animate to its normal position
+                        transition={{
+                            duration: 0.6,
+                            delay: index * 0.1,
+                            type: "spring",
+                            stiffness: 200,
+                            damping: 25
+                        }} // Spring-based animation for individual list items
+                    >
+                        <div className="flex-1">
+                            <div className="flex justify-start items-center mb-2 gap-8">
+                                <p className="text-lg font-semibold text-white">{title}</p>
+                                <div className={`badge pb-3 p-2 text-black font-medium ${level === 'Easy' ? 'bg-green-500' : level === 'Medium' ? 'bg-yellow-500' : 'bg-red-500'}`}>{level}</div>
+                            </div>
+                            <p className="text-sm text-gray-300">{topics.join(", ")}</p>
+                        </div>
+                        <div className="flex items-center justify-between gap-8">
+                            <Link href={`https://leetcode.com/problems/${titleSlug}`} target="_blank">
+                                <button
+                                    className="btn btn-outline btn-accent"
+                                    aria-label={`View problem ${title}`}
+                                >
+                                    View
+                                </button>
+                            </Link>
+                            <div className="flex items-center space-x-2">
+                                <input
+                                    type="checkbox"
+                                    id={`checkbox-${titleSlug}`}
+                                    className="checkbox checkbox-accent checked:true"
+                                    checked={completedQueList.includes(title)}
+                                    onChange={() => (handelSubmission(title))}
+                                />
+                                <label htmlFor={`checkbox-${titleSlug}`} className="text-sm text-gray-300 min-w-[150px]">
+                                    {
+                                        completedQueList.includes(title) ?
+                                            "Completed"
+                                            : "Mark as Complete"
+                                    }
+                                </label>
+                            </div>
+                        </div>
+                    </motion.li>
+                ))}
+            </motion.ul>
+        </div>
+    )
+};
 
 export default LeetCodePage;

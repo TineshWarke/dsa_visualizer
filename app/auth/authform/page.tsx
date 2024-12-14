@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 const AuthForm = () => {
     const [isClient, setIsClient] = useState(false);
     const [isSignUp, setIsSignUp] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter(); // Create an instance of the router
     const [formData, setFormData] = useState({
         email: "",
@@ -45,6 +46,7 @@ const AuthForm = () => {
 
     const signInUser = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             // Validate input
             if (!formData.email || !formData.password) {
@@ -54,17 +56,17 @@ const AuthForm = () => {
 
             // Send data to the server
             const response = await axios.put("/api/auth", formData);
-            // toast.success(response.data.msg);
-            // Store in localStorage
-            localStorage.setItem("email", formData.email); // To maintain email across the app
 
             // Clear form
             setFormData({ email: "", password: "", confirmPassword: "" });
 
             // Save token (optional)
-            const token = response.data.token;
+            const { token, user } = response.data;
             if (token) {
                 localStorage.setItem("token", token); // For authentication
+            }
+            if (token) {
+                localStorage.setItem("user", JSON.stringify(user)); // For authentication
             }
             toast.success('Sign In Successful')
             // Navigate to the dashboard
@@ -75,16 +77,18 @@ const AuthForm = () => {
                     ? error.response.data.error
                     : "An error occurred";
             toast.error(errorMessage);
+            setIsLoading(false)
         }
     };
 
     const signUpUser = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        setIsLoading(true)
         const { password, confirmPassword, email } = formData;
 
         if (password !== confirmPassword) {
             toast.error("Passwords do not match");
+            setIsLoading(false)
             return;
         }
 
@@ -92,13 +96,14 @@ const AuthForm = () => {
             const { data } = await axios.post("/api/auth", { email, password });
             toast.success(data.msg);
             setFormData({ email: "", password: "", confirmPassword: "" });
+            setIsLoading(false)
             setIsSignUp(false)
         } catch (error: unknown) {
             const errorMessage = axios.isAxiosError(error) && error.response?.data?.error
                 ? error.response.data.error
                 : "An error occurred";
-
             toast.error(errorMessage);
+            setIsLoading(false)
         }
     };
 
@@ -289,11 +294,15 @@ const AuthForm = () => {
                         <div className="form-control mt-3">
                             <motion.button
                                 type="submit"
-                                className="btn btn-neutral w-full mt-2"
+                                className={`btn btn-neutral w-full mt-2 ${isLoading ? "cursor-not-allowed" : ''}`}
                                 whileHover={{ scale: 1.05 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                {isSignUp ? "Sign Up" : "Sign In"}
+                                {isLoading ? (
+                                    <span className="loading loading-dots loading-lg"></span>
+                                ) : (
+                                    isSignUp ? "Sign Up" : "Sign In"
+                                )}
                             </motion.button>
                         </div>
                     </form>
