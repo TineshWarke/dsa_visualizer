@@ -39,7 +39,7 @@ const Props: React.FC = () => {
                 return;
             }
 
-            let response = await axios.post("/api/user", { user: formData });
+            const response = await axios.post("/api/user", { user: formData });
             toast.success(response.data.msg);
             getData();
         } catch (error) {

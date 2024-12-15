@@ -76,7 +76,7 @@ const problems: Problem[] = [
 ];
 
 const LeetCodePage: React.FC = () => {
-    const [completedQueList, setCompletedQueList] = useState<String[]>([]);
+    const [completedQueList, setCompletedQueList] = useState<string[]>([]);
 
     const handelSubmission = async (title: string) => {
         try {

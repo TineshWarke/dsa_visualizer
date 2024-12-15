@@ -8,8 +8,6 @@ const LoadDb = async () => {
 
 LoadDb()
 
-const SECRET_KEY = process.env.JWT_SECRET || "your_default_secret_key"; // Store this securely in an environment variable
-
 export async function PUT(request: Request) {
     try {
         const { email } = await request.json();

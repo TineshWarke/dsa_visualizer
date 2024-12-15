@@ -10,7 +10,7 @@ LoadDb()
 
 export async function PUT(request: Request) {
     try {
-        const { email, password } = await request.json();
+        const { email } = await request.json();
 
         const user = await User.findOne({ email });
         if (!user) {

@@ -5,13 +5,14 @@ const NoteSchema: Schema = new Schema({
   title: {
     type: String,
     required: true,
-    unique: true,
   },
   description: {
     type: String,
     required: true,
   },
-});
+},
+  { _id: false, autoIndex: false }
+);
 
 // Topic Data Schema
 const TopicDataSchema: Schema = new Schema({
@@ -27,7 +28,9 @@ const TopicDataSchema: Schema = new Schema({
     type: [NoteSchema],
     default: [],
   },
-});
+},
+  { _id: false }
+);
 
 const sampleData = [
   {

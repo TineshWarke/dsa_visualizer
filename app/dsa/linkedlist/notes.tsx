@@ -2,6 +2,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Note {
     title: string;

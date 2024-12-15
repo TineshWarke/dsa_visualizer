@@ -59,7 +59,7 @@ const PolarChartExample: React.FC = () => {
                 borderWidth: 2,
             },
             {
-                label: 'Pending',
+                label: 'Total',
                 data: topics.map(topic => 100 + (topic.total * 0)),
                 borderWidth: 0.5,
             },

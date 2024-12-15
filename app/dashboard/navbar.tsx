@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 const Navbar = () => {
     const router = useRouter();
-    const [rating, setRating] = useState<Number | null>(null);
+    const [rating, setRating] = useState<number | null>(null);
     useEffect(() => {
         if (typeof window !== "undefined") {
             const storedUser = localStorage.getItem("user");
@@ -38,7 +38,7 @@ const Navbar = () => {
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-gray-400 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                             <li><a>Homepage</a></li>
-                            <li><a>Portfolio</a></li>
+                            <li><a href='https://tineshwarke-portfolio.vercel.app/' target="_blank">Portfolio</a></li>
                             <li><a>About</a></li>
                         </ul>
                     </div>
@@ -48,11 +48,11 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end">
                     <div className="rating gap-1 mx-4">
-                        <input type="radio" name="rating-3" className="mask mask-heart bg-red-400" />
-                        <input type="radio" name="rating-3" className="mask mask-heart bg-orange-400" />
-                        <input type="radio" name="rating-3" className="mask mask-heart bg-yellow-400" />
-                        <input type="radio" name="rating-3" className="mask mask-heart bg-lime-400" />
-                        <input type="radio" name="rating-3" className="mask mask-heart bg-green-400" defaultChecked />
+                        <input type="radio" name="rating-3" className="mask mask-heart bg-red-400" checked={rating === 1} onChange={() => setRating(1)} />
+                        <input type="radio" name="rating-3" className="mask mask-heart bg-orange-400" checked={rating === 2} onChange={() => setRating(2)} />
+                        <input type="radio" name="rating-3" className="mask mask-heart bg-yellow-400" checked={rating === 3} onChange={() => setRating(3)} />
+                        <input type="radio" name="rating-3" className="mask mask-heart bg-lime-400" checked={rating === 4} onChange={() => setRating(4)} />
+                        <input type="radio" name="rating-3" className="mask mask-heart bg-green-400" checked={rating === 5} onChange={() => setRating(5)} />
                     </div>
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar bg-base-300">
                         <div className="w-10 rounded-full" onClick={() => router.push('/profile')}>
