@@ -12,7 +12,8 @@ const AuthForm = () => {
     const [isClient, setIsClient] = useState(false);
     const [isSignUp, setIsSignUp] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const router = useRouter(); // Create an instance of the router
+    const router = useRouter();
+    const [isPc, setIsPc] = useState(true);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -107,9 +108,14 @@ const AuthForm = () => {
         }
     };
 
-
     useEffect(() => {
         setIsClient(true);
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isMobile =
+            /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/.test(
+                userAgent
+            );
+        setIsPc(!isMobile);
     }, []);
 
     if (!isClient) return null;
@@ -181,7 +187,7 @@ const AuthForm = () => {
                 ))}
 
                 {/* Rotating Circles */}
-                {[...Array(6)].map((_, i) => (
+                {isPc ? [...Array(6)].map((_, i) => (
                     <motion.div
                         key={i}
                         className="absolute w-16 h-16 border-2 border-accent rounded-full"
@@ -199,7 +205,7 @@ const AuthForm = () => {
                             ease: "linear",
                         }}
                     />
-                ))}
+                )) : ''}
 
                 {/* Animated Stars Background */}
                 {starsPositions.map((position, i) => (
@@ -224,127 +230,139 @@ const AuthForm = () => {
                 ))}
 
                 {/* Sign-In / Sign-Up Form */}
-                <motion.div
-                    initial={{ opacity: 0.95, y: 50 }}
-                    animate={{
-                        opacity: 1,
-                        y: [50, -10, 0, -10, 0, -10, 0, -10, 0, -10, 0, -10, 0],
-                    }}
-                    transition={{
-                        duration: 60,
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                        ease: "easeOut",
-                    }}
-                    className="relative z-10 bg-white shadow-lg rounded-xl p-6 w-full max-w-sm"
-                >
-                    <h1 className="text-2xl font-bold text-center mb-4 text-base-300">
-                        {isSignUp ? "Sign Up" : "Sign In"}
-                    </h1>
-                    <form onSubmit={isSignUp ? signUpUser : signInUser}>
-                        <div className="form-control mb-1">
-                            <label className="label">
-                                <span className="label-text text-base-300 font-medium text-lg">Email</span>
-                            </label>
-                            <motion.input
-                                type="email"
-                                name="email"
-                                onChange={onChangeHandler}
-                                value={formData.email}
-                                placeholder="Enter your email"
-                                className="input input-bordered w-full"
-                                autoFocus
-                                spellCheck="false"
-                                whileFocus={{ scale: 1.05 }} // Slight scale increase on focus
-                                transition={{ duration: 0.2 }}
-                            />
-                        </div>
-                        <div className="form-control mb-1">
-                            <label className="label">
-                                <span className="label-text text-base-300 font-medium text-lg">Password</span>
-                            </label>
-                            <motion.input
-                                type="password"
-                                name="password"
-                                onChange={onChangeHandler}
-                                value={formData.password}
-                                placeholder="Enter your password"
-                                className="input input-bordered w-full"
-                                whileFocus={{ scale: 1.05 }} // Slight scale increase on focus
-                                transition={{ duration: 0.2 }}
-                            />
-                        </div>
-                        {isSignUp && (
-                            <div className="form-control mb-1">
-                                <label className="label">
-                                    <span className="label-text text-base-300 font-medium text-lg">Confirm Password</span>
-                                </label>
-                                <motion.input
-                                    type="password"
-                                    name="confirmPassword"
-                                    onChange={onChangeHandler}
-                                    value={formData.confirmPassword}
-                                    placeholder="Confirm your password"
-                                    className="input input-bordered w-full"
-                                    whileFocus={{ scale: 1.05 }}
-                                    transition={{ duration: 0.2 }}
-                                />
-                            </div>
-                        )}
-                        <div className="form-control mt-3">
-                            <motion.button
-                                type="submit"
-                                className={`btn btn-neutral w-full mt-2 ${isLoading ? "cursor-not-allowed" : ''}`}
-                                whileHover={{ scale: 1.05 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                {isLoading ? (
-                                    <span className="loading loading-dots loading-lg"></span>
-                                ) : (
-                                    isSignUp ? "Sign Up" : "Sign In"
+                {
+                    isPc ?
+                        <motion.div
+                            initial={{ opacity: 0.95, y: 50 }}
+                            animate={{
+                                opacity: 1,
+                                y: [50, -10, 0, -10, 0, -10, 0, -10, 0, -10, 0, -10, 0],
+                            }}
+                            transition={{
+                                duration: 60,
+                                repeat: Infinity,
+                                repeatType: "reverse",
+                                ease: "easeOut",
+                            }}
+                            className="relative z-10 bg-white shadow-lg rounded-xl p-6 w-full max-w-sm"
+                        >
+                            <h1 className="text-2xl font-bold text-center mb-4 text-base-300">
+                                {isSignUp ? "Sign Up" : "Sign In"}
+                            </h1>
+                            <form onSubmit={isSignUp ? signUpUser : signInUser}>
+                                <div className="form-control mb-1">
+                                    <label className="label">
+                                        <span className="label-text text-base-300 font-medium text-lg">Email</span>
+                                    </label>
+                                    <motion.input
+                                        type="email"
+                                        name="email"
+                                        onChange={onChangeHandler}
+                                        value={formData.email}
+                                        placeholder="Enter your email"
+                                        className="input input-bordered w-full"
+                                        autoFocus
+                                        spellCheck="false"
+                                        whileFocus={{ scale: 1.05 }} // Slight scale increase on focus
+                                        transition={{ duration: 0.2 }}
+                                    />
+                                </div>
+                                <div className="form-control mb-1">
+                                    <label className="label">
+                                        <span className="label-text text-base-300 font-medium text-lg">Password</span>
+                                    </label>
+                                    <motion.input
+                                        type="password"
+                                        name="password"
+                                        onChange={onChangeHandler}
+                                        value={formData.password}
+                                        placeholder="Enter your password"
+                                        className="input input-bordered w-full"
+                                        whileFocus={{ scale: 1.05 }} // Slight scale increase on focus
+                                        transition={{ duration: 0.2 }}
+                                    />
+                                </div>
+                                {isSignUp && (
+                                    <div className="form-control mb-1">
+                                        <label className="label">
+                                            <span className="label-text text-base-300 font-medium text-lg">Confirm Password</span>
+                                        </label>
+                                        <motion.input
+                                            type="password"
+                                            name="confirmPassword"
+                                            onChange={onChangeHandler}
+                                            value={formData.confirmPassword}
+                                            placeholder="Confirm your password"
+                                            className="input input-bordered w-full"
+                                            whileFocus={{ scale: 1.05 }}
+                                            transition={{ duration: 0.2 }}
+                                        />
+                                    </div>
                                 )}
-                            </motion.button>
+                                <div className="form-control mt-3">
+                                    <motion.button
+                                        type="submit"
+                                        className={`btn btn-neutral w-full mt-2 ${isLoading ? "cursor-not-allowed" : ''}`}
+                                        whileHover={{ scale: 1.05 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        {isLoading ? (
+                                            <span className="loading loading-dots loading-lg"></span>
+                                        ) : (
+                                            isSignUp ? "Sign Up" : "Sign In"
+                                        )}
+                                    </motion.button>
+                                </div>
+                            </form>
+                            <p className="text-sm text-center text-gray-600 mt-4">
+                                {isSignUp ? (
+                                    <>
+                                        Already have an account?{" "}
+                                        <motion.a
+                                            href="#"
+                                            onClick={() => setIsSignUp(false)}
+                                            className="text-blue-500 hover:underline"
+                                            whileHover={{ scale: 1.1 }} // Scale increase on hover
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            Sign In
+                                        </motion.a>
+                                    </>
+                                ) : (
+                                    <>
+                                        Don&apos;t have an account?{" "}
+                                        <motion.a
+                                            href="#"
+                                            onClick={() => setIsSignUp(true)}
+                                            className="text-blue-500 hover:underline"
+                                            whileHover={{ scale: 1.1 }} // Scale increase on hover
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            Sign Up
+                                        </motion.a>
+                                        <br />
+                                        <motion.a
+                                            href="#"
+                                            className="text-blue-500 hover:underline cursor-not-allowed"
+                                            whileHover={{ scale: 1.1 }} // Scale increase on hover
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            Forgot Password?
+                                        </motion.a>
+                                    </>
+                                )}
+                            </p>
+                        </motion.div>
+                        :
+                        <div className="flex items-center justify-center h-screen z-50">
+                            <div className="text-center p-6 bg-white rounded shadow-md m-4">
+                                <h1 className="text-xl font-bold text-red-500">PC Only!</h1>
+                                <p className="text-gray-700">
+                                    This page is designed for PC. Please use a device with a larger screen for the best experience.
+                                </p>
+                            </div>
                         </div>
-                    </form>
-                    <p className="text-sm text-center text-gray-600 mt-4">
-                        {isSignUp ? (
-                            <>
-                                Already have an account?{" "}
-                                <motion.a
-                                    href="#"
-                                    onClick={() => setIsSignUp(false)}
-                                    className="text-blue-500 hover:underline"
-                                    whileHover={{ scale: 1.1 }} // Scale increase on hover
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    Sign In
-                                </motion.a>
-                            </>
-                        ) : (
-                            <>
-                                Don&apos;t have an account?{" "}
-                                <motion.a
-                                    href="#"
-                                    onClick={() => setIsSignUp(true)}
-                                    className="text-blue-500 hover:underline"
-                                    whileHover={{ scale: 1.1 }} // Scale increase on hover
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    Sign Up
-                                </motion.a>
-                                <br />
-                                <motion.a
-                                    href="#"
-                                    className="text-blue-500 hover:underline cursor-not-allowed"
-                                    whileHover={{ scale: 1.1 }} // Scale increase on hover
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    Forgot Password?
-                                </motion.a>
-                            </>
-                        )}
-                    </p>
-                </motion.div>
+                }
             </div>
         </>
     );

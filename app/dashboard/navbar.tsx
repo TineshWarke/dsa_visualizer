@@ -5,6 +5,15 @@ import React, { useEffect, useState } from 'react'
 const Navbar = () => {
     const router = useRouter();
     const [rating, setRating] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const handleAvatarClick = () => {
+        setIsLoading(true);
+        setTimeout(() => {
+            router.push('/profile');
+        }, 1000);
+    };
+
     useEffect(() => {
         if (typeof window !== "undefined") {
             const storedUser = localStorage.getItem("user");
@@ -54,11 +63,18 @@ const Navbar = () => {
                         <input type="radio" name="rating-3" className="mask mask-heart bg-lime-400" checked={rating === 4} onChange={() => setRating(4)} />
                         <input type="radio" name="rating-3" className="mask mask-heart bg-green-400" checked={rating === 5} onChange={() => setRating(5)} />
                     </div>
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar bg-base-300">
-                        <div className="w-10 rounded-full" onClick={() => router.push('/profile')}>
-                            <img
-                                alt="T"
-                                src="/coder.png" />
+                    <div
+                        tabIndex={0}
+                        role="button"
+                        className={`btn btn-ghost btn-circle avatar bg-base-300 ${isLoading ? 'cursor-wait' : ''
+                            }`}
+                    >
+                        <div className="w-10 rounded-full" onClick={handleAvatarClick}>
+                            {isLoading ? (
+                                <span className="loading loading-spinner loading-lg bg-gray-600"></span>
+                            ) : (
+                                <img alt="T" src="/coder.png" />
+                            )}
                         </div>
                     </div>
                 </div>

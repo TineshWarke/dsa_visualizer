@@ -8,6 +8,14 @@ import Navbar from './navbar';
 const Dashboard = () => {
     const [mounted, setMounted] = useState(false);
     const router = useRouter();
+    const [loadingId, setLoadingId] = useState<number | null>(null);
+
+    const handleDivClick = (id: number, path: string) => {
+        setLoadingId(id);
+        setTimeout(() => {
+            router.push(path);
+        }, 1000);
+    };
 
     const topics = [
         {
@@ -50,19 +58,14 @@ const Dashboard = () => {
             description: 'Dive into linked lists and learn about their structure, types (singly, doubly, and circular), and operations. Explore their advantages over arrays in dynamic memory allocation.',
             path: '/dsa/linkedlist'
         }
-    ]
-        ;
-
-    const handleTopicClick = (path: string) => {
-        router.push(path);
-    };
+    ];
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
     if (!mounted) {
-        return null; // Render nothing on the server side
+        return null;
     }
     return (
         <div className='w-screen h-screen pt-4'>
@@ -95,7 +98,8 @@ const Dashboard = () => {
                 {topics.map((topic) => (
                     <motion.div
                         key={topic.id}
-                        className="btn w-80 h-48 p-6 mx-2 my-8 bg-white rounded-lg shadow-lg transform transition-all hover:bg-gray-400 cursor-pointer"
+                        className={`btn w-80 h-48 p-6 mx-2 my-8 bg-white rounded-lg shadow-lg transform transition-all hover:bg-gray-400 cursor-pointer ${loadingId === topic.id ? 'bg-gray-200 cursor-wait' : ''
+                            }`}
                         initial={{ opacity: 0, scale: 0.8, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{
@@ -104,18 +108,20 @@ const Dashboard = () => {
                             type: 'spring',
                             stiffness: 50,
                         }}
-                        onClick={() => handleTopicClick(topic.path)}
+                        onClick={() => handleDivClick(topic.id, topic.path)}
                     >
-                        <motion.h3
-                            className="text-2xl font-bold text-gray-800"
-                        >
-                            {topic.title}
-                        </motion.h3>
-                        <motion.p
-                            className="text-gray-600 text-justify"
-                        >
-                            {topic.description}
-                        </motion.p>
+                        {loadingId === topic.id ? (
+                            <span className="loading loading-dots loading-lg bg-black"></span>
+                        ) : (
+                            <>
+                                <motion.h3 className="text-2xl font-bold text-gray-800">
+                                    {topic.title}
+                                </motion.h3>
+                                <motion.p className="text-gray-600 text-justify">
+                                    {topic.description}
+                                </motion.p>
+                            </>
+                        )}
                     </motion.div>
                 ))}
             </div>

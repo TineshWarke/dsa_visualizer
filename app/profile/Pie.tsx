@@ -40,13 +40,13 @@ const PolarChartExample: React.FC = () => {
 
     const backgroundColors = [
         '#B13D2D',
-        '#1B8C3D', 
-        '#2A3F91', 
-        '#B61D6C', 
+        '#1B8C3D',
+        '#2A3F91',
+        '#B61D6C',
         '#D38F00',
-        '#8B0C2A', 
-        '#A5D78A', 
-        '#14b8a6', 
+        '#8B0C2A',
+        '#A5D78A',
+        '#14b8a6',
     ];
 
     const data = {
@@ -70,7 +70,7 @@ const PolarChartExample: React.FC = () => {
         responsive: true,
         plugins: {
             legend: {
-                display: false, 
+                display: false,
             },
         },
         scales: {
