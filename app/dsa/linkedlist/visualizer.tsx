@@ -115,7 +115,7 @@ const Visualizer: React.FC = () => {
       <h1 className="text-3xl font-bold mb-6">Linked-List Visualizer</h1>
 
       {/* Linked-List Visualization */}
-      <div className="flex items-center space-x-8 h-56 w-full max-w-6xl overflow-auto px-8 py-6 bg-transparent relative">
+      <div className="border-white border-t-2 flex items-center space-x-8 h-56 w-full max-w-6xl overflow-auto px-8 py-6 bg-transparent relative">
         {/* Background Blur Effect */}
         <div className="absolute inset-0 pointer-events-none"></div>
 

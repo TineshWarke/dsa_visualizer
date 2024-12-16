@@ -122,7 +122,7 @@ const QueueVisualizer: React.FC = () => {
       <ToastContainer position="top-center" />
       <h1 className="text-3xl font-bold mb-6">Queue Visualizer</h1>
 
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center border-white border-t-2 pt-2">
         {/* Queue Container */}
         <div className="relative flex items-center justify-center space-x-4">
 
