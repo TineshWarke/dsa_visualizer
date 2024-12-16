@@ -48,7 +48,7 @@ const Navbar = () => {
                             className="menu menu-sm dropdown-content bg-gray-400 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                             <li><a>Homepage</a></li>
                             <li><a href='https://tineshwarke-portfolio.vercel.app/' target="_blank">Portfolio</a></li>
-                            <li><a>About</a></li>
+                            <li><a href='https://www.linkedin.com/in/tinesh-warke/' target="_blank">About</a></li>
                         </ul>
                     </div>
                 </div>

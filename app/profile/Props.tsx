@@ -27,8 +27,8 @@ const Props: React.FC = () => {
                 return;
             }
 
-            if (formData.fullName.length < 8 || formData.fullName.length > 20) {
-                toast.error("Username must be between 8 and 20 characters.");
+            if (formData.fullName.length < 5 || formData.fullName.length > 25) {
+                toast.error("Name must be between 5 and 25 characters.");
                 getData();
                 return;
             }
